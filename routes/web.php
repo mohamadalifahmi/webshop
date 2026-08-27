@@ -1,0 +1,67 @@
+<?php
+
+use App\Http\Controllers\ProductController;
+use App\Livewire\Account\Dashboard as AccountDashboard;
+use App\Livewire\Account\MyOrders;
+use App\Livewire\Account\OrderDetail;
+use App\Livewire\Admin\Dashboard as AdminDashboard;
+use App\Livewire\Admin\OrdersMonitor;
+use App\Livewire\Admin\PayoutsManager as AdminPayouts;
+use App\Livewire\Admin\ProductsModeration;
+use App\Livewire\Admin\SellersManager;
+use App\Livewire\Admin\SiteSettings;
+use App\Livewire\Seller\Dashboard as SellerDashboard;
+use App\Livewire\Seller\OrdersManager as SellerOrders;
+use App\Livewire\Seller\PayoutsManager as SellerPayouts;
+use App\Livewire\Seller\ProductsManager;
+use App\Livewire\Seller\StoreSettings;
+use App\Livewire\SellerApplication;
+use App\Livewire\Storefront\CartPage;
+use App\Livewire\Storefront\Catalog;
+use App\Livewire\Storefront\Checkout;
+use App\Livewire\Storefront\ProductShow;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', Catalog::class)->name('home');
+Route::get('/product/{slug}', ProductShow::class)->name('product.show');
+Route::get('/become-seller', SellerApplication::class)->middleware('auth')->name('become-seller');
+
+Route::get('/dashboard', fn () => redirect()->to(
+    auth()->user()?->isAdmin() ? route('admin.dashboard')
+        : (auth()->user()?->isSeller() ? route('seller.dashboard')
+            : route('account.dashboard'))
+))->middleware('auth')->name('dashboard');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/account', AccountDashboard::class)->name('account.dashboard');
+    Route::get('/cart', CartPage::class)->name('cart');
+    Route::get('/checkout', Checkout::class)->name('checkout');
+    Route::get('/account/orders', MyOrders::class)->name('account.orders');
+    Route::get('/account/orders/{number}', OrderDetail::class)->name('account.orders.show');
+    Route::view('/account/profile', 'profile')->name('profile');
+
+    // Seller hub
+    Route::get('/seller/apply', SellerApplication::class)->name('seller.application.show');
+
+    Route::prefix('seller')->name('seller.')->middleware(['role:seller', 'seller.approved'])->group(function () {
+        Route::get('/', SellerDashboard::class)->name('dashboard');
+        Route::get('/products', ProductsManager::class)->name('products');
+        Route::patch('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+        Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+        Route::get('/orders', SellerOrders::class)->name('orders');
+        Route::get('/payouts', SellerPayouts::class)->name('payouts');
+        Route::get('/settings', StoreSettings::class)->name('settings');
+    });
+
+    // Admin panel
+    Route::prefix('admin')->name('admin.')->middleware('role:admin')->group(function () {
+        Route::get('/', AdminDashboard::class)->name('dashboard');
+        Route::get('/sellers', SellersManager::class)->name('sellers');
+        Route::get('/products', ProductsModeration::class)->name('products');
+        Route::get('/orders', OrdersMonitor::class)->name('orders');
+        Route::get('/payouts', AdminPayouts::class)->name('payouts');
+        Route::get('/settings', SiteSettings::class)->name('settings');
+    });
+});
+
+require __DIR__.'/auth.php';

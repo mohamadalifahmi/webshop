@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ $title ?? 'Seller Hub' }} — SOUKELKOM</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="font-sans antialiased bg-gray-100 text-gray-800">
+<div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside id="seller-sidebar" class="fixed inset-y-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0 transition-transform bg-gray-900 text-gray-300 flex flex-col" x-data="{ open: true }">
+        <a href="{{ route('home') }}" wire:navigate class="flex h-16 items-center gap-2 border-b border-gray-800 px-6 shrink-0">
+            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-600 font-black text-white">S</span>
+            <div>
+                <p class="text-sm font-black text-white leading-none">SOUKELKOM</p>
+                <p class="text-[10px] uppercase tracking-widest text-amber-500 mt-1">Seller Hub</p>
+            </div>
+        </a>
+
+        <nav class="flex-1 space-y-1 overflow-y-auto px-3 py-4 text-sm font-medium">
+            @php($route = request()->route()?->getName())
+            <a href="{{ route('seller.dashboard') }}" wire:navigate
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'seller.dashboard' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
+                📊 Dashboard
+            </a>
+            <a href="{{ route('seller.products') }}" wire:navigate
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'seller.products' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
+                📦 My Products
+            </a>
+            <a href="{{ route('seller.orders') }}" wire:navigate
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'seller.orders' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
+                🚚 Orders to Ship
+            </a>
+            <a href="{{ route('seller.payouts') }}" wire:navigate
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'seller.payouts' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
+                💵 Payouts
+            </a>
+            <a href="{{ route('seller.settings') }}" wire:navigate
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'seller.settings' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
+                ⚙️ Store Settings
+            </a>
+        </nav>
+
+        <div class="border-t border-gray-800 p-4 text-xs text-gray-500">
+            {{ auth()->user()->seller?->store_name }}
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="flex flex-1 flex-col lg:pl-64 min-w-0">
+        <header class="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 sm:px-6">
+            <button onclick="document.getElementById('seller-sidebar').classList.toggle('-translate-x-full')" class="lg:hidden p-2 text-gray-500">☰</button>
+            <p class="hidden lg:block text-sm font-semibold text-gray-500">{{ $title ?? '' }}</p>
+            <div class="flex items-center gap-4 text-sm">
+                <span class="hidden sm:inline text-gray-400">{{ auth()->user()->name }}</span>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="text-red-500 hover:text-red-700 font-medium">Log out</button>
+                </form>
+            </div>
+        </header>
+
+        <main class="flex-1 p-4 sm:p-6 max-w-7xl w-full mx-auto">
+            @if (session('success'))
+                <div class="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">✓ {{ session('success') }}</div>
+            @endif
+            @if (session('error'))
+                <div class="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">✕ {{ session('error') }}</div>
+            @endif
+            {{ $slot }}
+        </main>
+    </div>
+</div>
+@stack('scripts')
+</body>
+</html>
