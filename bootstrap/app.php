@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Middleware\AddSecurityHeaders;
 use App\Http\Middleware\EnsureSellerApproved;
+use App\Http\Middleware\TrustProxies;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -16,6 +18,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => RoleMiddleware::class,
             'seller.approved' => EnsureSellerApproved::class,
+        ]);
+
+        // Security-first global middleware (runs before the response is returned).
+        // append() => these run AFTER session/auth so they can read cookies/proxies.
+        $middleware->appendToGroup('web', [
+            TrustProxies::class,
+            AddSecurityHeaders::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

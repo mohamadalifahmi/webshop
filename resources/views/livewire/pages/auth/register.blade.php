@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -22,7 +22,7 @@ new #[Layout('layouts.guest')] class extends Component
     {
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email:rfc,filter', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -87,5 +87,5 @@ new #[Layout('layouts.guest')] class extends Component
         {{ __('Already have an account?') }}
         <a href="{{ route('login') }}" wire:navigate class="font-bold text-amber-600 hover:text-amber-700">{{ __('Log in') }}</a>
     </p>
-    <p class="mt-3 text-center text-[11px] text-gray-400">Want to sell? Create an account first, then hit “Become a Seller”.</p>
+    <p class="mt-3 text-center text-[11px] text-gray-400">Want to sell? Create an account first, then hit "Become a Seller".</p>
 </div>

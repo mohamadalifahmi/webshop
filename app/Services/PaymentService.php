@@ -12,7 +12,9 @@ class PaymentService
 {
     public static function submitManualProof(Order $order, string $proofPath): void
     {
-        if ($order->payment_method !== 'manual' || $order->payment_status !== 'unpaid') {
+        $paymentStatus = $order->payment_status ?? 'unpaid';
+
+        if ($order->payment_method !== 'manual' || $paymentStatus !== 'unpaid') {
             throw new \DomainException('Payment proof cannot be submitted for this order.');
         }
 
@@ -39,9 +41,14 @@ class PaymentService
             ])->save();
 
             $order->refresh();
-
-            DistributeEarnings::dispatch($order);
-            CancelUnshippedOrders::dispatch($order)->delay(now()->addHours(SettingsService::shipDeadlineHours())->addMinutes(5));
         });
+
+        // Distribute earnings synchronously so seller balances are credited the moment
+        // payment is confirmed (works with or without a running queue worker).
+        DistributeEarnings::dispatchSync($order);
+
+        // The auto-cancel sweep is deferred until the shipping deadline passes.
+        CancelUnshippedOrders::dispatch($order)
+            ->delay(now()->addHours(SettingsService::shipDeadlineHours())->addMinutes(5));
     }
 }

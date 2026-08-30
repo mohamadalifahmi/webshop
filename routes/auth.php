@@ -5,17 +5,27 @@ use App\Livewire\Actions\Logout;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
+/*
+ * Authentication routes with strict rate limiting.
+ * Limits (hardening — even admin is not exempt):
+ *   register / login / forgot / reset ...... 10 requests per minute (brute force)
+ *   verify-email .............................. 6 requests per minute
+ */
 Route::middleware('guest')->group(function () {
     Volt::route('register', 'pages.auth.register')
+        ->middleware('throttle:10,1')
         ->name('register');
 
     Volt::route('login', 'pages.auth.login')
+        ->middleware('throttle:10,1')
         ->name('login');
 
     Volt::route('forgot-password', 'pages.auth.forgot-password')
+        ->middleware('throttle:10,1')
         ->name('password.request');
 
     Volt::route('reset-password/{token}', 'pages.auth.reset-password')
+        ->middleware('throttle:10,1')
         ->name('password.reset');
 });
 

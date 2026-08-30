@@ -19,12 +19,14 @@ use App\Livewire\SellerApplication;
 use App\Livewire\Storefront\CartPage;
 use App\Livewire\Storefront\Catalog;
 use App\Livewire\Storefront\Checkout;
+use App\Livewire\Storefront\Home;
 use App\Livewire\Storefront\ProductShow;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', Catalog::class)->name('home');
-Route::get('/product/{slug}', ProductShow::class)->name('product.show');
-Route::get('/become-seller', SellerApplication::class)->middleware('auth')->name('become-seller');
+Route::get('/', Home::class)->name('home');
+Route::get('/shop', Catalog::class)->name('shop');
+Route::get('/product/{product}', ProductShow::class)->name('product.show');
+Route::get('/become-seller', SellerApplication::class)->middleware(['auth', 'throttle:10,1'])->name('become-seller');
 
 Route::get('/dashboard', fn () => redirect()->to(
     auth()->user()?->isAdmin() ? route('admin.dashboard')
@@ -35,15 +37,15 @@ Route::get('/dashboard', fn () => redirect()->to(
 Route::middleware(['auth'])->group(function () {
     Route::get('/account', AccountDashboard::class)->name('account.dashboard');
     Route::get('/cart', CartPage::class)->name('cart');
-    Route::get('/checkout', Checkout::class)->name('checkout');
+    Route::get('/checkout', Checkout::class)->middleware('throttle:6,1')->name('checkout');
     Route::get('/account/orders', MyOrders::class)->name('account.orders');
     Route::get('/account/orders/{number}', OrderDetail::class)->name('account.orders.show');
     Route::view('/account/profile', 'profile')->name('profile');
 
-    // Seller hub
-    Route::get('/seller/apply', SellerApplication::class)->name('seller.application.show');
+    // Seller hub — strict throttle protects the seller workflow too
+    Route::get('/seller/apply', SellerApplication::class)->middleware('throttle:10,1')->name('seller.application.show');
 
-    Route::prefix('seller')->name('seller.')->middleware(['role:seller', 'seller.approved'])->group(function () {
+    Route::prefix('seller')->name('seller.')->middleware(['role:seller', 'seller.approved', 'throttle:60,1'])->group(function () {
         Route::get('/', SellerDashboard::class)->name('dashboard');
         Route::get('/products', ProductsManager::class)->name('products');
         Route::patch('/products/{product}', [ProductController::class, 'update'])->name('products.update');
@@ -53,8 +55,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/settings', StoreSettings::class)->name('settings');
     });
 
-    // Admin panel
-    Route::prefix('admin')->name('admin.')->middleware('role:admin')->group(function () {
+    // Admin panel — strict rate limit applies equally (hardening policy)
+    Route::prefix('admin')->name('admin.')->middleware(['role:admin', 'throttle:60,1'])->group(function () {
         Route::get('/', AdminDashboard::class)->name('dashboard');
         Route::get('/sellers', SellersManager::class)->name('sellers');
         Route::get('/products', ProductsModeration::class)->name('products');

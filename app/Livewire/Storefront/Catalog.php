@@ -34,6 +34,26 @@ class Catalog extends Component
         $this->resetPage();
     }
 
+    public function suggestions()
+    {
+        if (trim($this->q) === '') {
+            return collect();
+        }
+
+        $term = '%'.trim($this->q).'%';
+
+        return Product::query()
+            ->with(['category:id,name'])
+            ->where('status', 'active')
+            ->where(fn ($word) => $word
+                ->where('name', 'like', $term)
+                ->orWhere('description', 'like', $term)
+                ->orWhere('sku', 'like', $term))
+            ->latest('published_at')
+            ->limit(5)
+            ->get();
+    }
+
     public function resetFilters(): void
     {
         $this->reset('q', 'category', 'minPrice', 'maxPrice', 'sort');
@@ -63,6 +83,7 @@ class Catalog extends Component
         return view('livewire.storefront.catalog', [
             'products' => $products,
             'categories' => Category::orderBy('name')->get(),
+            'suggestions' => $this->suggestions(),
         ]);
     }
 }

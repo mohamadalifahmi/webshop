@@ -8,7 +8,7 @@
                 </a>
 
                 <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-                    <a href="{{ route('home') }}" wire:navigate class="{{ request()->routeIs('home') ? 'text-amber-600' : 'hover:text-amber-600' }}">Shop</a>
+                    <a href="{{ route('shop') }}" wire:navigate class="{{ request()->routeIs('shop') ? 'text-amber-600' : 'hover:text-amber-600' }}">Shop</a>
                     @auth
                         <a href="{{ route('account.dashboard') }}" wire:navigate class="{{ request()->routeIs('account.*', 'profile') ? 'text-amber-600' : 'hover:text-amber-600' }}">My Account</a>
                         <a href="{{ route('account.orders') }}" wire:navigate class="{{ request()->routeIs('account.orders*') ? 'text-amber-600' : 'hover:text-amber-600' }}">Orders</a>

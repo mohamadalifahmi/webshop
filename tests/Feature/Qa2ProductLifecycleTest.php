@@ -9,6 +9,7 @@
 
 use App\Livewire\Admin\ProductsModeration;
 use App\Livewire\Seller\ProductsManager;
+use App\Livewire\Storefront\ProductShow;
 use App\Mail\ProductRejectedMail;
 use App\Models\Category;
 use App\Models\Product;
@@ -69,4 +70,25 @@ it('rejects products with a reason and notifies the seller by email', function (
         ->and($product->fresh()->rejection_reason)->toBe('No image attached to the listing.');
 
     Mail::assertQueued(ProductRejectedMail::class);
+});
+
+it('increments and decrements the product page quantity within stock limits', function () {
+    [$user, $seller] = makeApprovedSeller();
+    $product = makeActiveProduct($seller, 95, 3);
+
+    Livewire::test(ProductShow::class, ['product' => $product->fresh()])
+        ->assertSet('quantity', 1)
+        ->call('incrementQuantity')
+        ->assertSet('quantity', 2)
+        ->call('incrementQuantity')
+        ->assertSet('quantity', 3)
+        ->call('incrementQuantity')
+        ->assertSet('quantity', 3)
+        ->call('decrementQuantity')
+        ->assertSet('quantity', 2)
+        ->call('decrementQuantity')
+        ->call('decrementQuantity')
+        ->assertSet('quantity', 1)
+        ->call('decrementQuantity')
+        ->assertSet('quantity', 1);
 });

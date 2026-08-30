@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             CatalogSeeder::class,
             DemoCatalogSeeder::class,
+            DemoProductImagesSeeder::class,
         ]);
     }
 }

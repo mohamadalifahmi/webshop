@@ -61,6 +61,7 @@ class OrderService
                 'total' => bcadd($subtotal, number_format($shippingFee, 2, '.', ''), 2),
                 'currency' => 'USD',
                 'payment_method' => $paymentMethod,
+                'payment_status' => 'unpaid',
                 'ship_to_name' => $data['name'],
                 'ship_to_phone' => $data['phone'],
                 'governorate' => $data['governorate'],

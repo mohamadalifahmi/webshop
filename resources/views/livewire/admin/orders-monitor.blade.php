@@ -52,7 +52,7 @@
                     @elseif ($order->payment_status === 'paid')
                         <span class="text-[11px] font-semibold text-emerald-600">Paid {{ optional($order->paid_at)->format('d M, H:i') }}</span>
                     @else
-                        <span class="text-[11px] text-gray-400">Awaiting buyer payment</span>
+                        <span class="text-[11px] text-gray-400">⏳ Buyer hasn't uploaded a transfer proof yet — the button appears once they do.</span>
                     @endif
                 </footer>
             </article>

@@ -50,9 +50,9 @@
         @if ($product->stock > 0)
             <form wire:submit="addToCart" class="mt-5 flex gap-3">
                 <div class="flex items-center rounded-lg border border-gray-300 overflow-hidden">
-                    <button type="button" wire:click="$set('quantity', max(1, quantity - 1))" class="px-3.5 py-2.5 hover:bg-gray-100 text-lg leading-none">−</button>
+                    <button type="button" wire:click="decrementQuantity" class="px-3.5 py-2.5 hover:bg-gray-100 text-lg leading-none">−</button>
                     <input type="number" wire:model.live="quantity" min="1" max="{{ $product->stock }}" class="w-14 border-0 text-center focus:ring-0" />
-                    <button type="button" wire:click="$set('quantity', min({{ $product->stock }}, quantity + 1))" class="px-3.5 py-2.5 hover:bg-gray-100 text-lg leading-none">+</button>
+                    <button type="button" wire:click="incrementQuantity" class="px-3.5 py-2.5 hover:bg-gray-100 text-lg leading-none">+</button>
                 </div>
                 <x-ui-button type="primary" class="flex-1 !py-3">Add to Cart</x-ui-button>
             </form>

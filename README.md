@@ -39,6 +39,30 @@ npm run build
 php artisan serve        # http://127.0.0.1:8000
 ```
 
+### Local email (Mailpit)
+
+Emails (approvals, orders, payouts) are captured locally by **Mailpit** so nothing leaves your machine during development.
+
+```bash
+# Mailpit is installed at C:\tools\mailpit\
+C:\tools\mailpit\mailpit.exe --smtp 127.0.0.1:1025 --listen 127.0.0.1:8025
+```
+
+Then open **http://127.0.0.1:8025** to read all outgoing mail live. The app is pre-configured
+(`MAIL_MAILER=smtp`, `MAIL_PORT=1025`) to deliver there. For production, point `.env` at your
+real SMTP provider and swap the config back via `php artisan config:cache`.
+
+> All money distribution is **synchronous** (`DistributeEarnings::dispatchSync`), so seller
+> balances and the ledger update the instant payment is confirmed — no queue worker required.
+> The 48h auto-cancel sweep runs on a deferred job (`CancelUnshippedOrders`) and needs a worker
+> in production (see Production Notes).
+
+### Seller approval email flow
+
+When an admin approves a seller, a `SellerApprovedMail` is queued/sent to the seller (store name
+in the subject). Verify with the seeded seller `kareem@soukelkom.test` or any new store:
+approve it in Admin → Sellers, then check Mailpit at `http://127.0.0.1:8025`.
+
 ### Demo accounts (password: `password`)
 
 | Role | Email |
@@ -47,6 +71,36 @@ php artisan serve        # http://127.0.0.1:8000
 | Seller | ahmed@soukelkom.test |
 | Seller | maya@soukelkom.test |
 | Buyer | buyer@soukelkom.test |
+
+## Security (A+ hardening)
+
+The app ships with an A+-oriented security posture out of the box:
+
+- **Security headers** on every response (via `AddSecurityHeaders`):
+  `Strict-Transport-Security` (HSTS preload), `X-Frame-Options: DENY`,
+  `X-Content-Type-Options: nosniff`, `Referrer-Policy`,
+  `Permissions-Policy` (all sensors off), `Cross-Origin-Opener-Policy`,
+  and a **nonce-based Content-Security-Policy** (no `unsafe-inline` for scripts).
+- **Rate limiting** (strict, admins included): auth routes 10/min, checkout 6/min,
+  seller/admin panels 60/min.
+- **Session hardening**: `SESSION_SAME_SITE=strict`, secure cookie enabled in production.
+- **CSRF** enabled on all state-changing requests (Laravel default).
+- **Escape by default**: Blade `{{ }}` output escaping; no `{!! raw !!}` left in views.
+- **SQL injection**: 100% Eloquent/parameterized queries — zero raw SQL.
+- **IDOR isolation**: order/cart/product scoping by owner, enforced by tests.
+- **Email rule hardening**: all user-facing `email` rules use `email:rfc,filter`
+  (mitigate CRLF header-injection advisory affecting Laravel 11).
+- **`composer audit` / `npm audit`** — zero NEW vulnerabilities; two residual
+  advisories documented: `phpunit/phpunit` (dev-only tooling, not deployed) and a
+  Laravel-framework advisory fixed only in 12.x (the affected surface — signed URL
+  + email rules — is mitigated and throttled in code).
+- **TrustProxies** middleware ready for reverse-proxy/CDN (set `TRUSTED_PROXIES`).
+
+Verify with `tests/Feature/{SecurityHeaders,RateLimit,IdorAccess,SqlInjectionSafety,XssOutputEscaping}Test.php`.
+
+For an external **A+ grader** (SecurityHeaders.com / SSL Labs / OWASP ZAP): deploy on a real
+domain with TLS, then open `.env.production.example` and follow the values (APP_DEBUG=false,
+SESSION_SECURE_COOKIE=true, trusted proxies, real SMTP, Redis/Meilisearch).
 
 ## Tests
 

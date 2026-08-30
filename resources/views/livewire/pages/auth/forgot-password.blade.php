@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use Illuminate\Support\Facades\Password;
 use Livewire\Attributes\Layout;
@@ -14,7 +14,7 @@ new #[Layout('layouts.guest')] class extends Component
     public function sendPasswordResetLink(): void
     {
         $this->validate([
-            'email' => ['required', 'string', 'email'],
+            'email' => ['required', 'string', 'email:rfc,filter', 'max:255'],
         ]);
 
         // We will send the password reset link to this user. Once we have attempted
@@ -55,7 +55,7 @@ new #[Layout('layouts.guest')] class extends Component
 
         <div class="mt-5 flex items-center justify-between gap-3">
             <a class="text-xs font-semibold text-gray-400 hover:text-amber-600" href="{{ route('login') }}" wire:navigate>
-                ← {{ __('Back to sign in') }}
+                â† {{ __('Back to sign in') }}
             </a>
 
             <x-primary-button>

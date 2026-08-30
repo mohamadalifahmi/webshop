@@ -39,6 +39,11 @@ class Product extends Model implements HasMedia
         ];
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function seller(): BelongsTo
     {
         return $this->belongsTo(Seller::class);
@@ -59,7 +64,7 @@ class Product extends Model implements HasMedia
         $this->addMediaConversion('thumb')
             ->width(400)
             ->height(400)
-            ->sharpen()
+            ->sharpen(10)
             ->performOnCollections('images');
     }
 

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
@@ -35,7 +35,7 @@ new #[Layout('layouts.guest')] class extends Component
     {
         $this->validate([
             'token' => ['required'],
-            'email' => ['required', 'string', 'email'],
+            'email' => ['required', 'string', 'email:rfc,filter', 'max:255'],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -90,7 +90,7 @@ new #[Layout('layouts.guest')] class extends Component
         <!-- Password -->
         <div>
             <x-input-label for="password" :value="__('Password')" />
-            <x-text-input wire:model="password" id="password" class="block mt-1.5 w-full" type="password" name="password" required autocomplete="new-password" placeholder="••••••••" />
+            <x-text-input wire:model="password" id="password" class="block mt-1.5 w-full" type="password" name="password" required autocomplete="new-password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
@@ -100,7 +100,7 @@ new #[Layout('layouts.guest')] class extends Component
 
             <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1.5 w-full"
                           type="password"
-                          name="password_confirmation" required autocomplete="new-password" placeholder="••••••••" />
+                          name="password_confirmation" required autocomplete="new-password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>

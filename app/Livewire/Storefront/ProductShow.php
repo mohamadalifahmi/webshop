@@ -20,6 +20,16 @@ class ProductShow extends Component
         $this->product->load(['category', 'seller']);
     }
 
+    public function incrementQuantity(): void
+    {
+        $this->quantity = min($this->quantity + 1, max(1, $this->product->stock));
+    }
+
+    public function decrementQuantity(): void
+    {
+        $this->quantity = max(1, $this->quantity - 1);
+    }
+
     public function addToCart(): void
     {
         if (! auth()->check()) {
