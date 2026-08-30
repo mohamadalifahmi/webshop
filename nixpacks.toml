@@ -5,4 +5,4 @@ aptPkgs = ["libexif-dev"]
 cmds = ["install-php-extensions pcntl exif"]
 
 [phases.build]
-cmds = ["composer install --no-dev --optimize-autoloader --no-interaction"]
+cmds = ["composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-req=ext-exif"]
