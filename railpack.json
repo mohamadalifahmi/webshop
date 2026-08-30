@@ -1,0 +1,11 @@
+{
+  "$schema": "https://railpack.com/schema.json",
+  "php": {
+    "extensions": ["pcntl", "exif", "pdo_mysql", "redis", "ctype", "curl", "dom", "fileinfo", "mbstring", "openssl"]
+  },
+  "build": {
+    "commands": [
+      "composer install --no-dev --optimize-autoloader --no-interaction"
+    ]
+  }
+}
