@@ -1,0 +1,8 @@
+[phases.setup]
+aptPkgs = ["libexif-dev"]
+
+[phases.install]
+cmds = ["install-php-extensions pcntl exif"]
+
+[phases.build]
+cmds = ["composer install --no-dev --optimize-autoloader --no-interaction"]
