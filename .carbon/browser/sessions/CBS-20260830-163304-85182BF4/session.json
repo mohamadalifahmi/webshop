@@ -1,0 +1,92 @@
+{
+  "protocol": "carbon-browser/v1",
+  "sessionId": "CBS-20260830-163304-85182BF4",
+  "status": "blocked",
+  "createdAt": "2026-08-30T16:33:04Z",
+  "updatedAt": "2026-08-30T16:33:04Z",
+  "target": "https://webshop-production-734e.up.railway.app",
+  "adapter": {
+    "name": "playwright",
+    "version": "1.45.0",
+    "supportsHeadless": true
+  },
+  "negotiation": {
+    "protocol": "carbon-browser/v1",
+    "adapter": {
+      "id": null,
+      "name": "playwright",
+      "version": "1.45.0",
+      "family": null,
+      "transport": null
+    },
+    "accepted": false,
+    "validation": {
+      "protocol": "carbon-browser/v1",
+      "valid": false,
+      "adapter": {
+        "id": null,
+        "name": "playwright",
+        "version": "1.45.0",
+        "family": null,
+        "transport": null
+      },
+      "operations": [],
+      "evidenceChannels": [],
+      "sessionFeatures": [],
+      "errors": [
+        "protocol must be carbon-browser/v1",
+        "id is required",
+        "family is required",
+        "transport is required",
+        "transport is not recognized by carbon-browser/v1",
+        "operations must be an array",
+        "evidenceChannels must be an array",
+        "safety is required and must be an object",
+        "unknown required operations: dom-inspection, page-load, screenshot"
+      ],
+      "warnings": [
+        "family is not a first-party adapter family; conformance is still capability-based",
+        "partial adapter; minimum portable operations missing: action.click, capture.screenshot, discover.map, page.open, session.start, session.stop"
+      ]
+    },
+    "required": {
+      "operations": [
+        "page-load",
+        "dom-inspection",
+        "screenshot"
+      ],
+      "evidenceChannels": []
+    },
+    "supported": {
+      "operations": [],
+      "evidenceChannels": []
+    },
+    "missing": {
+      "operations": [
+        "dom-inspection",
+        "page-load",
+        "screenshot"
+      ],
+      "evidenceChannels": []
+    },
+    "degradation": "blocked-or-explicitly-replan",
+    "message": "Adapter does not satisfy the requested contract. Keep gaps visible, select another adapter, or explicitly re-plan a smaller run."
+  },
+  "operationCounts": {
+    "blocked": 0,
+    "cancelled": 0,
+    "failed": 0,
+    "skipped": 0,
+    "succeeded": 0
+  },
+  "evidenceChannels": {},
+  "remainingCapabilityGaps": {
+    "operations": [
+      "dom-inspection",
+      "page-load",
+      "screenshot"
+    ],
+    "evidenceChannels": []
+  },
+  "authority": "No destructive, paid, public, privileged, privacy-sensitive, or consequential action is authorized by this session record."
+}

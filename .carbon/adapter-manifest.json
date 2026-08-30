@@ -1,0 +1,33 @@
+﻿{
+    "protocol":  "carbon-browser/v1",
+    "evidenceChannels":  [
+                             "screenshot",
+                             "console",
+                             "network",
+                             "performance"
+                         ],
+    "safety":  {
+                   "public":  false,
+                   "destructive":  false,
+                   "privileged":  false,
+                   "privacySensitive":  false,
+                   "paid":  false
+               },
+    "operations":  [
+                       "session.start",
+                       "session.stop",
+                       "page.open",
+                       "discover.map",
+                       "action.click",
+                       "action.fill",
+                       "capture.screenshot",
+                       "console.read"
+                   ],
+    "adapter":  {
+                    "transport":  "host-agent",
+                    "family":  "user-chrome",
+                    "name":  "User Chrome Local",
+                    "id":  "user-chrome-local",
+                    "version":  "1.0.0"
+                }
+}
