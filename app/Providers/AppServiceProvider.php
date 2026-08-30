@@ -12,7 +12,9 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        if ($this->app->environment('production')) {
+            $this->app->register(\Laravel\Horizon\HorizonServiceProvider::class);
+        }
     }
 
     public function boot(): void
