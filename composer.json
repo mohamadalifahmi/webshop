@@ -81,4 +81,8 @@
     },
     "minimum-stability": "stable",
     "prefer-stable": true
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> be5dd95ec30d02512c23ef9ef04d5da201c31358
