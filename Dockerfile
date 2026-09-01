@@ -4,7 +4,7 @@
 FROM composer:2 AS vendor
 WORKDIR /app
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-scripts --no-autoloader --ignore-platform-req=ext-pcntl --ignore-platform-req=ext-exif --no-interaction
+RUN composer install --no-dev --no-scripts --ignore-platform-req=ext-pcntl --ignore-platform-req=ext-exif --no-interaction && composer dump-autoload --optimize --no-interaction
 
 # ---- Node stage: build frontend assets ----
 FROM node:24 AS frontend
