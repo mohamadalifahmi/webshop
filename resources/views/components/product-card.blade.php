@@ -3,8 +3,8 @@
 <article class="group flex flex-col overflow-hidden rounded-2xl glass-card">
     <a href="{{ route('product.show', $product) }}" wire:navigate class="block aspect-square overflow-hidden bg-space-800 relative">
         @if ($image = $product->getFirstMediaUrl('images', 'thumb') ?: $product->getFirstMediaUrl('images'))
-            <img src="{{ $image }}" alt="{{ $product->name }}" loading="lazy"
-                class="h-full w-full object-cover group-hover:scale-105 transition duration-500" />
+            <img src="{{ $image }}" alt="{{ $product->name }}" loading="lazy" decoding="async"
+                width="400" height="400" class="h-full w-full object-cover group-hover:scale-105 transition duration-500" />
         @else
             <div class="flex h-full w-full items-center justify-center text-4xl opacity-20">📦</div>
         @endif

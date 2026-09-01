@@ -7,7 +7,7 @@
                 <a href="{{ route('product.show', $product) }}" wire:navigate
                     class="flex items-center gap-3 px-4 py-3 hover:bg-cosmic-500/10 transition-colors">
                     @if ($img = $product->getFirstMediaUrl('images', 'thumb') ?: $product->getFirstMediaUrl('images'))
-                        <img src="{{ $img }}" alt="{{ $product->name }}" width="44" height="44" loading="lazy" class="h-11 w-11 shrink-0 rounded-xl object-cover" />
+                        <img src="{{ $img }}" alt="{{ $product->name }}" width="44" height="44" loading="lazy" decoding="async" class="h-11 w-11 shrink-0 rounded-xl object-cover" />
                     @else
                         <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/5 text-xl">📦</span>
                     @endif

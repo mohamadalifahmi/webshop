@@ -34,7 +34,7 @@
             <div class="mt-3 grid grid-cols-5 gap-2">
                 @foreach ($product->getMedia('images') as $media)
                     <img src="{{ $media->getUrl('thumb') }}" alt="{{ $product->name }} — thumbnail {{ $loop->index + 1 }}"
-                        width="80" height="80" loading="lazy" class="aspect-square rounded-lg object-cover border border-white/10" />
+                        width="80" height="80" loading="lazy" decoding="async" class="aspect-square rounded-lg object-cover border border-white/10" />
                 @endforeach
             </div>
         @endif
