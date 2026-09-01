@@ -28,8 +28,8 @@ function initParticleCanvas() {
     // Heavy O(n²) particle animation is a mobile CPU killer: on smaller screens
     // use far fewer particles and no connecting lines.
     const isMobile = window.innerWidth < 768;
-    const PARTICLE_COUNT = isMobile ? 18 : 60;
-    const CONNECT_DIST = 140;
+    const PARTICLE_COUNT = isMobile ? 8 : 25;
+    const CONNECT_DIST = isMobile ? 0 : 100;
 
     // Canvas was replaced or first run — (re)init.
     particleCanvas = canvas;
@@ -122,7 +122,8 @@ function initParticleCanvas() {
     }
 
     pRunning = true;
-    animate();
+    // Small delay so canvas init doesn't block first paint / LCP
+    setTimeout(animate, 300);
 }
 
 /* ── Scroll Reveal ──
