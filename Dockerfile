@@ -31,4 +31,4 @@ RUN chmod -R 777 storage bootstrap/cache
 # healthcheck friendly - expose 8080 default (Laravel artisan serve default)
 EXPOSE 8080
 
-CMD ["sh", "-c", "php artisan migrate --force --no-interaction || true && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
+CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
