@@ -29,4 +29,4 @@ COPY --from=frontend /app/public/build ./public/build
 
 RUN chmod -R 777 storage bootstrap/cache
 
-CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
+CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=8080"]
