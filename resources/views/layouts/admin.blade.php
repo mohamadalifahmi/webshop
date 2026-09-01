@@ -47,6 +47,10 @@
                class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.settings' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
                 ⚙️ Site Settings
             </a>
+            <a href="{{ route('admin.categories') }}" wire:navigate
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.categories' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
+                🏷️ Categories
+            </a>
         </nav>
 
         <div class="border-t border-gray-800 p-4 text-xs text-gray-500">

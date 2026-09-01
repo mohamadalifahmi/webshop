@@ -25,6 +25,8 @@ class SiteSettings extends Component
 
     /** @var array<int, array{id: int, governorate: string, fee: string}> */
     public array $rates = [];
+    public string $newGovernorate = '';
+    public string $newFee = '0';
 
     public function mount(): void
     {
@@ -39,6 +41,41 @@ class SiteSettings extends Component
             ->get()
             ->map(fn ($r) => ['id' => $r->id, 'governorate' => $r->governorate, 'fee' => (string) $r->fee])
             ->all();
+    }
+
+    public function addRate(): void
+    {
+        $validated = $this->validate([
+            'newGovernorate' => 'required|string|max:60|unique:shipping_rates,governorate',
+            'newFee' => 'required|numeric|min:0',
+        ], [
+            'newGovernorate.unique' => 'This governorate shipping rate already exists.',
+        ]);
+
+        \App\Models\ShippingRate::create([
+            'governorate' => trim($validated['newGovernorate']),
+            'fee' => number_format((float) $validated['newFee'], 2, '.', ''),
+            'is_active' => true,
+        ]);
+
+        $this->rates = \App\Models\ShippingRate::orderBy('governorate')
+            ->get()
+            ->map(fn ($r) => ['id' => $r->id, 'governorate' => $r->governorate, 'fee' => (string) $r->fee])
+            ->all();
+
+        $this->newGovernorate = '';
+        $this->newFee = '0';
+        session()->flash('success', 'Governorate rate added.');
+    }
+
+    public function deleteRate(int $id): void
+    {
+        \App\Models\ShippingRate::whereKey($id)->delete();
+        $this->rates = \App\Models\ShippingRate::orderBy('governorate')
+            ->get()
+            ->map(fn ($r) => ['id' => $r->id, 'governorate' => $r->governorate, 'fee' => (string) $r->fee])
+            ->all();
+        session()->flash('success', 'Rate deleted.');
     }
 
     public function save(): void

@@ -10,6 +10,7 @@ use App\Livewire\Admin\PayoutsManager as AdminPayouts;
 use App\Livewire\Admin\ProductsModeration;
 use App\Livewire\Admin\SellersManager;
 use App\Livewire\Admin\SiteSettings;
+use App\Livewire\Admin\CategoryManager;
 use App\Livewire\Seller\Dashboard as SellerDashboard;
 use App\Livewire\Seller\OrdersManager as SellerOrders;
 use App\Livewire\Seller\PayoutsManager as SellerPayouts;
@@ -65,6 +66,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/account', AccountDashboard::class)->name('account.dashboard');
     Route::get('/cart', CartPage::class)->name('cart');
     Route::get('/checkout', Checkout::class)->middleware('throttle:6,1')->name('checkout');
+    Route::post('/cart/items/{item}/quantity', [\App\Http\Controllers\CartController::class, 'updateQuantity'])
+        ->name('cart.update-quantity');
+    Route::post('/cart/items/{item}/remove', [\App\Http\Controllers\CartController::class, 'remove'])
+        ->name('cart.remove');
     Route::get('/account/orders', MyOrders::class)->name('account.orders');
     Route::get('/account/orders/{number}', OrderDetail::class)->name('account.orders.show');
     Route::view('/account/profile', 'profile')->name('profile');
@@ -90,6 +95,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/orders', OrdersMonitor::class)->name('orders');
         Route::get('/payouts', AdminPayouts::class)->name('payouts');
         Route::get('/settings', SiteSettings::class)->name('settings');
+        Route::get('/categories', CategoryManager::class)->name('categories');
     });
 });
 

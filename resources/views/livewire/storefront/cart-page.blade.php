@@ -18,11 +18,11 @@
                             @if ($img = $item->product->getFirstMediaUrl('images', 'thumb') ?: $item->product->getFirstMediaUrl('images'))
                                 <img src="{{ $img }}" alt="{{ $item->product->name }}" width="96" height="96" loading="lazy" class="h-full w-full object-cover" />
                             @else
-                                <div class="flex h-full items-center justify-center text-2xl opacity-20">📦</div>
+                                <div class="flex h-full items-center justify-center text-2xl opacity-20">ðŸ“¦</div>
                             @endif
                         </a>
                     @else
-                        <div class="h-20 w-20 sm:h-24 sm:w-24 shrink-0 overflow-hidden rounded-xl bg-space-800 flex items-center justify-center text-2xl opacity-20">📦</div>
+                        <div class="h-20 w-20 sm:h-24 sm:w-24 shrink-0 overflow-hidden rounded-xl bg-space-800 flex items-center justify-center text-2xl opacity-20">ðŸ“¦</div>
                     @endif
                     <div class="flex-1 min-w-0">
                         @if ($item->product)
@@ -34,14 +34,25 @@
                         @endif
                         <div class="mt-2 flex items-center gap-3">
                             @if ($item->product)
-                            {{-- Quantity control - dark friendly, count clearly visible --}}
+                            {{-- Quantity control - native forms (reliable, no JS dependencies) --}}
                             <div class="flex items-center rounded-xl overflow-hidden border border-white/15 bg-space-700/60 text-sm">
-                                <button type="button" wire:click="updateQty({{ $item->id }}, {{ max(1, $item->quantity - 1) }})" class="px-2.5 py-1 text-white hover:bg-white/10 transition">-</button>
+                                <form method="POST" action="{{ route('cart.update-quantity', $item->id) }}">
+                                    @csrf
+                                    <input type="hidden" name="quantity" value="{{ max(1, $item->quantity - 1) }}">
+                                    <button type="submit" title="Decrease quantity" class="px-2.5 py-1 text-white hover:bg-white/10 transition">-</button>
+                                </form>
                                 <span class="w-8 text-center font-semibold text-white">{{ $item->quantity }}</span>
-                                <button type="button" wire:click="updateQty({{ $item->id }}, {{ min($item->product->stock, $item->quantity + 1) }})" class="px-2.5 py-1 text-white hover:bg-white/10 transition">+</button>
+                                <form method="POST" action="{{ route('cart.update-quantity', $item->id) }}">
+                                    @csrf
+                                    <input type="hidden" name="quantity" value="{{ min($item->product->stock, $item->quantity + 1) }}">
+                                    <button type="submit" title="Increase quantity" class="px-2.5 py-1 text-white hover:bg-white/10 transition">+</button>
+                                </form>
                             </div>
                             @endif
-                            <button wire:click="removeItem({{ $item->id }})" wire:confirm="Remove this item?" class="text-xs font-medium text-red-400 hover:text-red-300 transition">Remove</button>
+                            <form method="POST" action="{{ route('cart.remove', $item->id) }}">
+                                @csrf
+                                <button type="submit" class="text-xs font-medium text-red-400 hover:text-red-300 transition">Remove</button>
+                            </form>
                         </div>
                     </div>
                     <div class="text-right">
