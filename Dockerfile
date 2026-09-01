@@ -1,10 +1,11 @@
 # syntax=docker/dockerfile:1
 
-# ---- Composer stage: install PHP deps ----
+# ---- Composer stage: install PHP deps + generate autoloader (has artisan) ----
 FROM composer:2 AS vendor
 WORKDIR /app
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-scripts --ignore-platform-req=ext-pcntl --ignore-platform-req=ext-exif --no-interaction && composer dump-autoload --optimize --no-interaction
+RUN composer install --no-dev --no-scripts --no-autoloader --ignore-platform-req=ext-pcntl --ignore-platform-req=ext-exif --no-interaction \
+    && composer dump-autoload --optimize --no-scripts --no-interaction
 
 # ---- Node stage: build frontend assets ----
 FROM node:24 AS frontend
@@ -27,8 +28,5 @@ COPY --from=vendor /app/vendor ./vendor
 COPY --from=frontend /app/public/build ./public/build
 
 RUN chmod -R 777 storage bootstrap/cache
-
-# healthcheck friendly - expose 8080 default (Laravel artisan serve default)
-EXPOSE 8080
 
 CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
