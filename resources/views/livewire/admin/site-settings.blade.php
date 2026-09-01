@@ -1,5 +1,26 @@
 <div class="max-w-3xl">
-    <h1 class="text-xl sm:text-2xl font-black text-gray-900 mb-6">Site Settings</h1>
+        <h1 class="text-xl sm:text-2xl font-black text-gray-900 mb-6">Site Settings</h1>
+
+        <!-- Add Rate Section — outside parent form so Enter submits addRate, not save -->
+        <section class="rounded-2xl bg-white border border-gray-200 p-5 sm:p-6 mb-6">
+            <h2 class="font-bold text-gray-900 mb-4">Shipping Rates by Governorate</h2>
+            <div class="mb-8 rounded-2xl bg-gray-900 border-2 border-cosmic/40 p-5 shadow-2xl shadow-cosmic/20">
+                <h3 class="text-sm font-black uppercase tracking-widest text-cosmic mb-4">Add New Governorate Rate</h3>
+                <form wire:submit.prevent="addRate" class="flex flex-wrap gap-4 items-end">
+                    <label class="block text-xs">
+                        <span class="mb-1 block font-bold text-white">Governorate</span>
+                        <input type="text" wire:model="newGovernorate" class="rounded-xl border-2 border-cosmic/60 bg-white text-gray-900 px-3 py-2 text-sm w-48 placeholder:text-gray-400 focus:border-cosmic focus:ring-2 focus:ring-cosmic/40 shadow-inner" placeholder="Tripoli" />
+                        @error('newGovernorate') <span class="mt-1 block text-xs text-red-400">{{ $message }}</span> @enderror
+                    </label>
+                    <label class="block text-xs">
+                        <span class="mb-1 block font-bold text-white">Fee ($)</span>
+                        <input type="number" step="0.01" min="0" wire:model="newFee" class="rounded-xl border-2 border-cosmic/60 bg-white text-gray-900 px-3 py-2 text-sm w-28 placeholder:text-gray-400 focus:border-cosmic focus:ring-2 focus:ring-cosmic/40 shadow-inner" placeholder="2.50" />
+                        @error('newFee') <span class="mt-1 block text-xs text-red-400">{{ $message }}</span> @enderror
+                    </label>
+                    <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-cosmic-500 hover:bg-cosmic-600 text-white px-5 py-2.5 text-sm font-bold shadow-lg shadow-cosmic-500/20 transition">Add Rate</button>
+                </form>
+            </div>
+        </section>
 
     <form wire:submit="save" class="space-y-6">
         <section class="rounded-2xl bg-white border border-gray-200 p-5 sm:p-6">
@@ -45,23 +66,6 @@
 
         <section class="rounded-2xl bg-white border border-gray-200 p-5 sm:p-6">
             <h2 class="font-bold text-gray-900 mb-4">Shipping Rates by Governorate</h2>
-
-            <div class="mb-8 rounded-2xl bg-gray-900 border-2 border-cosmic/40 p-5 shadow-2xl shadow-cosmic/20">
-                <h3 class="text-sm font-black uppercase tracking-widest text-cosmic mb-4">Add New Governorate Rate</h3>
-                <div class="flex flex-wrap gap-4 items-end">
-                    <label class="block text-xs">
-                        <span class="mb-1 block font-bold text-white">Governorate</span>
-                        <input type="text" wire:model="newGovernorate" class="rounded-xl border-2 border-cosmic/60 bg-white text-gray-900 px-3 py-2 text-sm w-48 placeholder:text-gray-400 focus:border-cosmic focus:ring-2 focus:ring-cosmic/40 shadow-inner" placeholder="Tripoli" />
-                        @error('newGovernorate') <span class="mt-1 block text-xs text-red-400">{{ $message }}</span> @enderror
-                    </label>
-                    <label class="block text-xs">
-                        <span class="mb-1 block font-bold text-white">Fee ($)</span>
-                        <input type="number" step="0.01" min="0" wire:model="newFee" class="rounded-xl border-2 border-cosmic/60 bg-white text-gray-900 px-3 py-2 text-sm w-28 placeholder:text-gray-400 focus:border-cosmic focus:ring-2 focus:ring-cosmic/40 shadow-inner" placeholder="2.50" />
-                        @error('newFee') <span class="mt-1 block text-xs text-red-400">{{ $message }}</span> @enderror
-                    </label>
-                    <button type="button" wire:click.prevent="addRate" class="inline-flex"><x-ui-button type="primary">Add Rate</x-ui-button></button>
-                </div>
-            </div>
 
             <div class="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                 @foreach ($rates as $i => $rate)
