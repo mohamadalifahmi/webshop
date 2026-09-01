@@ -32,7 +32,11 @@ class CommissionService
         $rate = self::resolveRate($product);
 
         $subtotal = bcmul((string) $product->price, (string) $quantity, 2);
-        $commission = self::round2((float) $subtotal * ($rate / 100));
+
+        // Compute commission entirely in bcmath (4 dp) then round to 2, avoiding
+        // the float cast that previously caused last-cent drift vs. the subtotal.
+        $commission = self::round2((float) bcmul($subtotal, (string) ($rate / 100), 4));
+
         $earning = bcsub($subtotal, number_format($commission, 2, '.', ''), 2);
 
         return [

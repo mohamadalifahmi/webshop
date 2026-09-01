@@ -36,7 +36,7 @@ class DistributeEarnings implements ShouldQueue
                 $seller = Seller::lockForUpdate()->findOrFail($item->seller_id);
 
                 $newBalance = bcadd((string) $seller->balance, (string) $item->seller_earning, 2);
-                $seller->update(['balance' => $newBalance]);
+                $seller->forceFill(['balance' => $newBalance])->save();
 
                 Transaction::create([
                     'seller_id' => $seller->id,

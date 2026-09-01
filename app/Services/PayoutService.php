@@ -71,7 +71,7 @@ class PayoutService
             $seller = Seller::lockForUpdate()->findOrFail($payout->seller_id);
 
             $newBalance = bcsub((string) $seller->balance, (string) $payout->amount, 2);
-            $seller->update(['balance' => $newBalance]);
+            $seller->forceFill(['balance' => $newBalance])->save();
 
             Transaction::create([
                 'seller_id' => $seller->id,

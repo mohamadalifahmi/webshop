@@ -1,4 +1,4 @@
-﻿<div class="max-w-3xl">
+<div class="max-w-3xl">
     <h1 class="text-xl sm:text-2xl font-black text-gray-900 mb-6">Site Settings</h1>
 
     <form wire:submit="save" class="space-y-6">

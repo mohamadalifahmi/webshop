@@ -58,7 +58,8 @@ class Checkout extends Component
 
     public function updatedGovernorate(): void
     {
-        $this->dispatch('shipping-updated');
+        // Changing the governorate re-renders the component, which recomputes
+        // the shipping fee below. No extra event needed.
     }
 
     public function placeOrder()
@@ -97,9 +98,14 @@ class Checkout extends Component
         }
     }
 
-    #[On('shipping-updated')]
     public function render()
     {
+        view()->share([
+            'pageTitle' => 'Checkout — ASTRAGO MARKET',
+            'pageDescription' => 'Secure checkout. One payment, auto-split to sellers.',
+            'pageRobots' => 'noindex, nofollow',
+        ]);
+
         $items = CartService::items(auth()->user());
 
         return view('livewire.storefront.checkout', [

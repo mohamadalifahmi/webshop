@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -37,8 +37,8 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <h1 class="text-xl font-black text-gray-900">Create your account</h1>
-    <p class="mt-1 mb-6 text-sm text-gray-400">Join the marketplace — buy local or open your own store.</p>
+    <h1 class="text-xl font-bold text-white">Create your account</h1>
+    <p class="mt-1 mb-6 text-sm text-white/40">Join the marketplace — buy local or open your own store.</p>
 
     <form wire:submit="register" class="space-y-4">
         <!-- Name -->
@@ -83,9 +83,9 @@ new #[Layout('layouts.guest')] class extends Component
         </x-primary-button>
     </form>
 
-    <p class="mt-6 border-t border-gray-100 pt-5 text-center text-sm text-gray-500">
+    <p class="mt-6 border-t border-white/5 pt-5 text-center text-sm text-white/40">
         {{ __('Already have an account?') }}
-        <a href="{{ route('login') }}" wire:navigate class="font-bold text-amber-600 hover:text-amber-700">{{ __('Log in') }}</a>
+        <a href="{{ route('login') }}" wire:navigate class="font-bold text-cosmic-400 hover:text-cosmic-300">{{ __('Log in') }}</a>
     </p>
-    <p class="mt-3 text-center text-[11px] text-gray-400">Want to sell? Create an account first, then hit "Become a Seller".</p>
+    <p class="mt-3 text-center text-[11px] text-white/25">Want to sell? Create an account first, then hit "Become a Seller".</p>
 </div>

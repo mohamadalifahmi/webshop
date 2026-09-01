@@ -1,4 +1,211 @@
-@import url('https://fonts.bunny.net/css?family=inter:400,500,600,700,800,900&display=swap');
+@import url('https://fonts.bunny.net/css?family=playfairdisplay:400,500,600,700,800,900|inter:400,500,600,700,800,900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ── Base ── */
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #0A0A0F;
+        color: #FFFFFF;
+        overflow-x: hidden;
+    }
+    ::selection {
+        background-color: rgba(107, 70, 193, 0.4);
+        color: #FFFFFF;
+    }
+}
+
+/* Subtle film-grain texture so the flat black never looks sterile.
+   A tiny SVG turbulence noise, near-invisible, running as a fixed overlay. */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Glassmorphism ── */
+@layer components {
+    .glass {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .glass-card {
+        background: rgba(31, 41, 55, 0.5);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card:hover {
+        background: rgba(31, 41, 55, 0.7);
+        border-color: rgba(107, 70, 193, 0.3);
+        box-shadow: 0 0 30px rgba(107, 70, 193, 0.15), 0 8px 32px rgba(0, 0, 0, 0.3);
+        transform: translateY(-4px);
+    }
+
+    /* Hero glow headline */
+    .text-glow {
+        text-shadow: 0 0 40px rgba(107, 70, 193, 0.5), 0 0 80px rgba(107, 70, 193, 0.25), 0 0 120px rgba(107, 70, 193, 0.1);
+    }
+    .text-glow-gold {
+        text-shadow: 0 0 30px rgba(251, 191, 36, 0.4), 0 0 60px rgba(251, 191, 36, 0.15);
+    }
+
+    /* CTA button glow */
+    .btn-glow {
+        position: relative;
+        background: linear-gradient(135deg, #6B46C1, #5538A3);
+        box-shadow: 0 0 20px rgba(107, 70, 193, 0.3);
+        transition: all 0.3s ease;
+    }
+    .btn-glow:hover {
+        box-shadow: 0 0 40px rgba(107, 70, 193, 0.6), 0 0 80px rgba(107, 70, 193, 0.2);
+        transform: translateY(-2px);
+    }
+
+    /* Nebula gradient overlays */
+    .nebula-gradient {
+        background: radial-gradient(ellipse at 20% 50%, rgba(107, 70, 193, 0.15) 0%, transparent 50%),
+                    radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                    radial-gradient(ellipse at 50% 80%, rgba(107, 70, 193, 0.08) 0%, transparent 50%);
+    }
+
+    /* Star gold accent line */
+    .gold-line {
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #FBBF24, transparent);
+    }
+
+    /* Dark input styling */
+    .input-cosmic {
+        background: rgba(31, 41, 55, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #FFFFFF;
+        transition: all 0.3s ease;
+    }
+    .input-cosmic::placeholder {
+        color: rgba(255, 255, 255, 0.35);
+    }
+    .input-cosmic:focus {
+        outline: none;
+        border-color: rgba(107, 70, 193, 0.5);
+        box-shadow: 0 0 20px rgba(107, 70, 193, 0.15);
+    }
+
+    /* Scroll reveal animation — content is always visible by default.
+       The reveal only adds a subtle motion; it can NEVER hide content,
+       so products/images can never disappear. */
+    .reveal {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .reveal.animating {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    .reveal.animating.revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Staggered reveal children — always visible, motion only */
+    .stagger-reveal > * {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .stagger-reveal.animating > * {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    .stagger-reveal.animating.revealed > * {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .stagger-reveal.revealed > *:nth-child(1) { transition-delay: 0ms; }
+    .stagger-reveal.revealed > *:nth-child(2) { transition-delay: 100ms; }
+    .stagger-reveal.revealed > *:nth-child(3) { transition-delay: 200ms; }
+    .stagger-reveal.revealed > *:nth-child(4) { transition-delay: 300ms; }
+    .stagger-reveal.revealed > *:nth-child(5) { transition-delay: 400ms; }
+    .stagger-reveal.revealed > *:nth-child(6) { transition-delay: 500ms; }
+}
+
+/* ── Shooting Star ── */
+@layer utilities {
+    .shooting-star {
+        position: absolute;
+        width: 120px;
+        height: 2px;
+        background: linear-gradient(90deg, rgba(255,255,255,0.9), transparent);
+        border-radius: 50%;
+        transform: rotate(-35deg);
+        animation: shoot linear infinite;
+        opacity: 0;
+    }
+    .shooting-star::before {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 0 12px 3px rgba(255, 255, 255, 0.8), 0 0 24px 6px rgba(107, 70, 193, 0.4);
+    }
+
+    @keyframes shoot {
+        0% {
+            transform: translateX(-200px) translateY(-200px) rotate(-35deg);
+            opacity: 0;
+        }
+        5% {
+            opacity: 1;
+        }
+        15% {
+            opacity: 1;
+        }
+        20% {
+            opacity: 0;
+            transform: translateX(600px) translateY(400px) rotate(-35deg);
+        }
+        100% {
+            opacity: 0;
+            transform: translateX(600px) translateY(400px) rotate(-35deg);
+        }
+    }
+
+    /* Particle canvas positioning */
+    #particle-canvas {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #0A0A0F;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(107, 70, 193, 0.4);
+        border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(107, 70, 193, 0.7);
+    }
+}

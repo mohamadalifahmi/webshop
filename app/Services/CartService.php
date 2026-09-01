@@ -25,14 +25,24 @@ class CartService
         $quantity = max(1, $quantity);
 
         DB::transaction(function () use ($cart, $product, $quantity, $existing) {
+            // Lock the current stock row inside the transaction so concurrent
+            // "add" calls can never oversell against a stale stock value.
+            $locked = Product::active()->lockForUpdate()->find($product->id);
+
+            if ($locked && $locked->stock <= 0) {
+                return;
+            }
+
+            $maxStock = $locked ? (int) $locked->stock : (int) $product->stock;
+
             if ($existing) {
-                $newQty = min($existing->quantity + $quantity, $product->stock);
+                $newQty = min($existing->quantity + $quantity, $maxStock);
                 $existing->update(['quantity' => $newQty]);
-            } else {
+            } elseif ($maxStock > 0) {
                 CartItem::create([
                     'cart_id' => $cart->id,
                     'product_id' => $product->id,
-                    'quantity' => min($quantity, $product->stock),
+                    'quantity' => min($quantity, $maxStock),
                 ]);
             }
         });
@@ -48,6 +58,13 @@ class CartService
             return;
         }
 
+        // A missing/deleted product can't be capped to a stock — delete the line.
+        if (! $item->product) {
+            $item->delete();
+
+            return;
+        }
+
         $item->update(['quantity' => min($quantity, max(1, $item->product->stock))]);
     }
 
@@ -58,12 +75,25 @@ class CartService
 
     public static function items($user): Collection
     {
-        return self::forUser($user)->items()->with(['product.category', 'product.seller'])->get();
+        return CartItem::query()
+            ->where('cart_id', self::forUser($user)->id)
+            ->with(['product' => fn ($q) => $q->withTrashed()->with(['category', 'seller'])])
+            ->get();
     }
 
     public static function subtotal($user): float
     {
-        return (float) self::items($user)->sum(fn ($item) => $item->product->price * $item->quantity);
+        $total = '0';
+        foreach (self::items($user) as $item) {
+            // Tolerate lines whose product no longer exists (seller deleted it).
+            if (! $item->product) {
+                continue;
+            }
+            $line = bcmul((string) $item->product->price, (string) $item->quantity, 2);
+            $total = bcadd($total, $line, 2);
+        }
+
+        return (float) $total;
     }
 
     public static function clear($user): void

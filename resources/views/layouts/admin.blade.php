@@ -1,21 +1,22 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="csp-nonce" content="{{ $cspNonce ?? '' }}">
-    <title>{{ $title ?? 'Admin' }} — SOUKELKOM</title>
+    <title>{{ $title ?? 'Admin' }} — ASTRAGO MARKET</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles(['nonce' => $cspNonce ?? ''])
 </head>
-<body class="font-sans antialiased bg-gray-100 text-gray-800">
+<body x-data class="font-sans antialiased bg-gray-100 text-gray-800">
 <div class="flex min-h-screen">
     <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0 transition-transform bg-gray-900 text-gray-300 flex flex-col">
         <a href="{{ route('home') }}" wire:navigate class="flex h-16 items-center gap-2 border-b border-gray-800 px-6 shrink-0">
             <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-600 font-black text-white">S</span>
             <div>
-                <p class="text-sm font-black text-white leading-none">SOUKELKOM</p>
+                <p class="text-sm font-black text-white leading-none">ASTRAGO MARKET</p>
                 <p class="text-[10px] uppercase tracking-widest text-amber-500 mt-1">Admin Panel</p>
             </div>
         </a>
@@ -77,6 +78,7 @@
         </main>
     </div>
 </div>
+@livewireScripts(['nonce' => $cspNonce ?? ''])
 @stack('scripts')
 </body>
 </html>

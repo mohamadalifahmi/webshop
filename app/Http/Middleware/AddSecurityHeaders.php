@@ -47,6 +47,13 @@ class AddSecurityHeaders
         $response->headers->set('Cross-Origin-Opener-Policy', 'same-origin');
         $response->headers->set('X-XSS-Protection', '0'); // modern: XSS protection is handled by CSP; disable legacy
 
+        // Images: 'self' covers same-origin media on a matching host/port. In
+        // local dev the storage disk serves over plain http:// (and the host can
+        // differ from the request host, so 'self' may not match) — explicitly
+        // allow http: there. Production stays https-only and unchanged.
+        $imgSrc = "img-src 'self' data: blob: https:"
+            .(app()->environment('production') ? '' : ' http:');
+
 $response->headers->set('Content-Security-Policy', implode('; ', [
             "default-src 'self'",
             // Livewire + Alpine MUST have 'unsafe-eval': Alpine compiles wire:/x- expressions
@@ -57,7 +64,7 @@ $response->headers->set('Content-Security-Policy', implode('; ', [
             // Tailwind/Preflight + Alpine inline style toggling need 'unsafe-inline' here;
             // fonts.bunny.net serves the Inter stylesheet.
             "style-src 'self' 'unsafe-inline' https://fonts.bunny.net",
-            "img-src 'self' data: blob: https:",
+            $imgSrc,
             // Fonts come from fonts.bunny.net (see app.css import)
             "font-src 'self' https://fonts.bunny.net data:",
             "connect-src 'self' https://api.stripe.com https://v3.stripe.com https://m.stripe.network",

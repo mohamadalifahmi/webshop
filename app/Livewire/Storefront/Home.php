@@ -101,6 +101,16 @@ class Home extends Component
             ->get();
     }
 
+    public function featuredCategories(): Collection
+    {
+        return Category::query()
+            ->withCount(['products' => fn ($q) => $q->where('status', 'active')])
+            ->whereHas('products', fn ($q) => $q->where('status', 'active'))
+            ->orderByDesc('products_count')
+            ->limit(6)
+            ->get();
+    }
+
     public function sections()
     {
         $query = Category::query()
@@ -140,12 +150,19 @@ class Home extends Component
     {
         $searching = trim($this->q) !== '';
 
+        view()->share([
+            'pageTitle' => 'ASTRAGO MARKET — Shop Among Stars',
+            'pageDescription' => 'The luxury space-tech marketplace. Vetted local sellers, one secure checkout — shop technology and taste among stars.',
+            'pageRobots' => 'index, follow',
+        ]);
+
         return view('livewire.storefront.home', [
             'searching' => $searching,
             'suggestions' => $searching ? $this->suggestions() : new Collection(),
             'results' => $searching ? $this->results() : new Collection(),
             'mostBought' => $searching ? new Collection() : $this->mostBought(),
             'sections' => $searching ? new Collection() : $this->sections(),
+            'featuredCategories' => $searching ? new Collection() : $this->featuredCategories(),
             'categories' => Category::orderBy('name')->get(),
         ]);
     }

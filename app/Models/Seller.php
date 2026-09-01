@@ -21,10 +21,15 @@ class Seller extends Model
         'governorate',
         'status',
         'commission_override',
-        'balance',
         'rejection_reason',
         'approved_at',
     ];
+
+    /*
+     * 'balance' is intentionally NOT fillable: it is a financial invariant that
+     * must only be mutated through audited service/job paths (forceFill), never
+     * via mass assignment from user-controlled input.
+     */
 
     protected function casts(): array
     {

@@ -8,7 +8,7 @@
     </div>
 
     <section class="grid grid-cols-2 gap-4 xl:grid-cols-4">
-        <x-stat-card title="Paid Orders" value="{{ $totalOrders }}" sub="Lifetime purchases" icon="🧾" />
+        <x-stat-card title="Paid Orders" value="{{ $totalOrders }}" sub="Lifetime purchases" icon="🛍️" />
         <x-stat-card title="Total Spent" value="${{ number_format($totalSpent, 2) }}" sub="{{ number_format((int) round($totalSpent * \App\Services\SettingsService::lbpExchangeRate())) }} LBP" icon="💳" />
         <x-stat-card title="This Month" value="${{ number_format($monthSpent, 2) }}" sub="Spent since the 1st" icon="📅" />
         <x-stat-card title="On The Way" value="{{ $onTheWay }}" sub="Being shipped to you" icon="🚚" />
@@ -18,7 +18,7 @@
         <section class="mt-6 rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 to-white p-5 sm:p-6 flex flex-wrap items-center justify-between gap-4">
             <div>
                 <p class="font-bold text-gray-900">Got something to sell? 🛍️</p>
-                <p class="text-sm text-gray-500 mt-0.5">Open your own store on SOUKELKOM in minutes — approval usually takes less than a day.</p>
+                <p class="text-sm text-gray-500 mt-0.5">Open your own store on ASTRAGO MARKET in minutes — approval usually takes less than a day.</p>
             </div>
             <a href="{{ route('become-seller') }}" wire:navigate><x-ui-button type="dark">Become a Seller</x-ui-button></a>
         </section>

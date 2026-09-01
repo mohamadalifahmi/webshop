@@ -19,7 +19,7 @@ class NewOrderAdminMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "New order {$this->order->order_number} - \${$this->order->total} - SOUKELKOM",
+            subject: "New order {$this->order->order_number} - \${$this->order->total} - ASTRAGO MARKET",
         );
     }
 

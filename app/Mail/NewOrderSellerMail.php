@@ -24,7 +24,7 @@ class NewOrderSellerMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "You have a new order to ship ({$this->order->order_number}) - SOUKELKOM",
+            subject: "You have a new order to ship ({$this->order->order_number}) - ASTRAGO MARKET",
         );
     }
 

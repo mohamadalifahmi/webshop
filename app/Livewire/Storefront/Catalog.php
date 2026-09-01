@@ -62,8 +62,13 @@ class Catalog extends Component
 
     public function render()
     {
-        $products = Product::query()
-            ->with(['category', 'seller:id,store_name,slug'])
+        view()->share([
+            'pageTitle' => 'Shop — ASTRAGO MARKET',
+            'pageDescription' => 'Browse fresh arrivals from Lebanon\'s local sellers. Search, filter by category and price, and sort by newest or price.',
+            'pageRobots' => 'index, follow',
+        ]);
+
+        $products = Product::query()            ->with(['category', 'seller:id,store_name,slug'])
             ->where('status', 'active')
             ->when($this->q !== '', function ($query) {
                 $term = '%'.$this->q.'%';

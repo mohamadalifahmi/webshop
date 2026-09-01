@@ -19,7 +19,7 @@ class OrderShippedMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Your order shipped! Tracking: {$this->item->tracking_number} - SOUKELKOM",
+            subject: "Your order shipped! Tracking: {$this->item->tracking_number} - ASTRAGO MARKET",
         );
     }
 

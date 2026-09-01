@@ -6,21 +6,21 @@
     'products' => [],
 ])
 
-<section class="mb-12">
-    <div class="mb-4 flex items-end justify-between gap-4">
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 reveal">
+    <div class="mb-6 flex items-end justify-between gap-4">
         <div class="flex items-center gap-3">
             @if ($icon)
-                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-2xl">{{ $icon }}</span>
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cosmic-500/10 border border-cosmic-500/15 text-2xl">{{ $icon }}</span>
             @endif
             <div>
-                <h2 class="text-xl sm:text-2xl font-black text-gray-900">{{ $title }}</h2>
+                <h2 class="text-xl sm:text-2xl font-serif font-bold text-white">{{ $title }}</h2>
                 @if ($subtitle)
-                    <p class="text-sm text-gray-500">{{ $subtitle }}</p>
+                    <p class="text-sm text-white/30 mt-0.5">{{ $subtitle }}</p>
                 @endif
             </div>
         </div>
         @if ($link)
-            <a href="{{ $link }}" wire:navigate class="shrink-0 text-sm font-semibold text-amber-600 hover:text-amber-700 transition">View all →</a>
+            <a href="{{ $link }}" wire:navigate class="shrink-0 text-sm font-semibold text-cosmic-400 hover:text-cosmic-300 transition">View all -&gt;</a>
         @endif
     </div>
 
@@ -31,6 +31,6 @@
             @endforeach
         </div>
     @else
-        <x-empty-state title="No products yet" description="Check back soon — new products are on the way." />
+        <x-empty-state title="No products yet" description="Check back soon - new arrivals are on the way." />
     @endif
 </section>

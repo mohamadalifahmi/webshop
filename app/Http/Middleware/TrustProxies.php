@@ -20,11 +20,20 @@ class TrustProxies
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $proxies = env('TRUSTED_PROXIES', '*');
+        // Never trust '*' blindly: that would let any client spoof
+        // X-Forwarded-Proto/Host/For, weakening HTTPS enforcement and URL
+        // generation. Only trust explicit proxy IPs/CIDRs set in TRUSTED_PROXIES.
+        $proxies = env('TRUSTED_PROXIES');
 
-        $proxies = $proxies === '*'
-            ? ['*']
-            : array_filter(array_map('trim', explode(',', $proxies ?: '')));
+        if (empty($proxies) || $proxies === '*') {
+            return $next($request);
+        }
+
+        $proxies = array_filter(array_map('trim', explode(',', $proxies ?: '')));
+
+        if ($proxies === []) {
+            return $next($request);
+        }
 
         $trustedHeaderSet = Request::HEADER_X_FORWARDED_FOR
             | Request::HEADER_X_FORWARDED_HOST

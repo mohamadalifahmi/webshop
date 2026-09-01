@@ -78,7 +78,12 @@ class Order extends Model
         if ($active === 0) {
             $newStatus = $this->payment_status === 'paid' ? 'refunded' : 'cancelled';
         } elseif ($counts['delivered'] === $active) {
-            $newStatus = 'delivered';
+            // Every active item delivered and earnings released -> completed.
+            $released = $items->filter(
+                fn ($i) => in_array($i->shipment_status, ['delivered', 'cancelled'], true)
+                    || (bool) $i->earnings_released
+            )->count();
+            $newStatus = $released === $items->count() ? 'completed' : 'delivered';
         } elseif ($active === $counts['shipped'] + $counts['delivered']) {
             $newStatus = 'shipped';
         } elseif ($counts['shipped'] + $counts['delivered'] > 0) {

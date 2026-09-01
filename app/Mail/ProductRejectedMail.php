@@ -19,7 +19,7 @@ class ProductRejectedMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Product rejected: {$this->product->name} - SOUKELKOM",
+            subject: "Product rejected: {$this->product->name} - ASTRAGO MARKET",
         );
     }
 

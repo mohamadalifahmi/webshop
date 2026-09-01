@@ -25,8 +25,8 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <h1 class="text-xl font-black text-gray-900">Welcome back 👋</h1>
-    <p class="mt-1 mb-6 text-sm text-gray-400">Sign in to continue shopping and selling.</p>
+    <h1 class="text-xl font-bold text-white">Welcome back</h1>
+    <p class="mt-1 mb-6 text-sm text-white/40">Sign in to continue shopping and selling.</p>
 
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -44,7 +44,7 @@ new #[Layout('layouts.guest')] class extends Component
             <div class="flex items-center justify-between">
                 <x-input-label for="password" :value="__('Password')" />
                 @if (Route::has('password.request'))
-                    <a class="text-xs font-semibold text-amber-600 hover:text-amber-700" href="{{ route('password.request') }}" wire:navigate>
+                    <a class="text-xs font-semibold text-cosmic-400 hover:text-cosmic-300" href="{{ route('password.request') }}" wire:navigate>
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
@@ -60,8 +60,8 @@ new #[Layout('layouts.guest')] class extends Component
 
         <!-- Remember Me -->
         <label for="remember" class="inline-flex cursor-pointer items-center">
-            <input wire:model="form.remember" id="remember" type="checkbox" class="rounded border-gray-300 text-amber-600 shadow-sm focus:ring-amber-500" name="remember">
-            <span class="ms-2 text-sm text-gray-500">{{ __('Remember me') }}</span>
+            <input wire:model="form.remember" id="remember" type="checkbox" class="rounded border-white/20 text-cosmic-500 bg-space-800 shadow-sm focus:ring-cosmic-500" name="remember">
+            <span class="ms-2 text-sm text-white/50">{{ __('Remember me') }}</span>
         </label>
 
         <x-primary-button class="w-full !py-3 !justify-center">
@@ -69,8 +69,8 @@ new #[Layout('layouts.guest')] class extends Component
         </x-primary-button>
     </form>
 
-    <p class="mt-6 border-t border-gray-100 pt-5 text-center text-sm text-gray-500">
-        {{ __('New to SOUKELKOM?') }}
-        <a href="{{ route('register') }}" wire:navigate class="font-bold text-amber-600 hover:text-amber-700">{{ __('Create an account') }}</a>
+    <p class="mt-6 border-t border-white/5 pt-5 text-center text-sm text-white/40">
+        {{ __('New to ASTRAGO?') }}
+        <a href="{{ route('register') }}" wire:navigate class="font-bold text-cosmic-400 hover:text-cosmic-300">{{ __('Create an account') }}</a>
     </p>
 </div>

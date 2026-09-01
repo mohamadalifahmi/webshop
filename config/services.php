@@ -31,4 +31,15 @@ return [
         ],
     ],
 
+    // Stripe card payments. Card checkout is hidden entirely unless BOTH the
+    // publishable key and secret are configured, so the "Card — Stripe Secure"
+    // option / misleading copy never shows an inactive payment path.
+    'stripe' => [
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+        'webhook' => [
+            'secret' => env('STRIPE_WEBHOOK_SECRET'),
+        ],
+    ],
+
 ];

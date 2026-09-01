@@ -19,7 +19,7 @@ class SellerApprovedMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Congratulations! Your store [{$this->seller->store_name}] is approved - SOUKELKOM",
+            subject: "Congratulations! Your store [{$this->seller->store_name}] is approved - ASTRAGO MARKET",
         );
     }
 

@@ -4,7 +4,6 @@ namespace App\Livewire\Storefront;
 
 use App\Services\CartService;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\On;
 use Livewire\Component;
 
 #[Layout('layouts.storefront')]
@@ -19,9 +18,14 @@ class CartPage extends Component
         return CartService::items(auth()->user());
     }
 
-    #[On('cart-updated')]
     public function render()
     {
+        view()->share([
+            'pageTitle' => 'Your Cart — ASTRAGO MARKET',
+            'pageDescription' => 'Review your cart and proceed to a secure checkout.',
+            'pageRobots' => 'noindex, nofollow',
+        ]);
+
         return view('livewire.storefront.cart-page', [
             'items' => $this->items,
             'subtotal' => auth()->check() ? CartService::subtotal(auth()->user()) : 0,

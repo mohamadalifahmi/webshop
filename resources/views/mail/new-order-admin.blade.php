@@ -1,7 +1,7 @@
 <x-mail::message>
 # New order received: {{ $order->order_number }}
 
-A buyer just placed an order on SOUKELKOM.
+A buyer just placed an order on ASTRAGO MARKET.
 
 | Item | Qty | Subtotal |
 |------|-----|----------|

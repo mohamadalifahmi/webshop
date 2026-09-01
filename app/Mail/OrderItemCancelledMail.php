@@ -19,7 +19,7 @@ class OrderItemCancelledMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Item cancelled & refund issued ({$this->item->product_name}) - SOUKELKOM",
+            subject: "Item cancelled & refund issued ({$this->item->product_name}) - ASTRAGO MARKET",
         );
     }
 

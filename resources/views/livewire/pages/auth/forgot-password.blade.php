@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 use Illuminate\Support\Facades\Password;
 use Livewire\Attributes\Layout;
@@ -37,8 +37,8 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <h1 class="text-xl font-black text-gray-900">Forgot your password?</h1>
-    <p class="mt-1 mb-6 text-sm text-gray-400">
+    <h1 class="text-xl font-bold text-white">Forgot your password?</h1>
+    <p class="mt-1 mb-6 text-sm text-white/40">
         {{ __('Enter your email and we will send you a reset link.') }}
     </p>
 
@@ -54,7 +54,7 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
 
         <div class="mt-5 flex items-center justify-between gap-3">
-            <a class="text-xs font-semibold text-gray-400 hover:text-amber-600" href="{{ route('login') }}" wire:navigate>
+            <a class="text-xs font-semibold text-white/40 hover:text-cosmic-400" href="{{ route('login') }}" wire:navigate>
                 â† {{ __('Back to sign in') }}
             </a>
 

@@ -19,7 +19,7 @@ class PayoutPaidMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Payout of \${$this->payout->amount} has been sent - SOUKELKOM",
+            subject: "Payout of \${$this->payout->amount} has been sent - ASTRAGO MARKET",
         );
     }
 

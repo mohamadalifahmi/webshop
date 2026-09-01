@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
@@ -70,11 +70,11 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <h1 class="text-xl font-black text-gray-900">Set a new password</h1>
-    <p class="mt-1 mb-6 text-sm text-gray-400">Choose a strong password for your account.</p>
+    <h1 class="text-xl font-bold text-white">Set a new password</h1>
+    <p class="mt-1 mb-6 text-sm text-white/40">Choose a strong password for your account.</p>
 
     @if (session('status'))
-        <div class="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700">
+        <div class="mb-4 rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-300">
             {{ session('status') }}
         </div>
     @endif

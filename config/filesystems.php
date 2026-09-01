@@ -39,7 +39,10 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            // Relative URL so media works on ANY host/port the site is viewed
+            // from (8000, 8024, production domain). A hardcoded absolute APP_URL
+            // breaks every <img> when the preview port differs from .env.
+            'url' => '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],

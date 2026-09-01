@@ -1,2 +1,10 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /cart
+Disallow: /checkout
+Disallow: /account/
+Disallow: /seller
+Disallow: /admin
+Disallow: /currency/
+
+Sitemap: https://astrago.market/sitemap.xml

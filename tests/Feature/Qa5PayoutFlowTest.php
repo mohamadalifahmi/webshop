@@ -21,8 +21,10 @@ it('processes a payout end to end: request -> admin marks paid -> balance deduct
     [$sellerUser, $seller] = makeApprovedSeller();
     $admin = makeAdmin();
 
-    // Give the seller a $100 balance (simulating prior distributed earnings)
-    $seller->update(['balance' => '100.00']);
+    // Give the seller a $100 balance (simulating prior distributed earnings).
+    // Balance is intentionally not mass-assignable (security), so seed it via
+    // the same guarded write path production earnings use (forceFill).
+    $seller->forceFill(['balance' => '100.00'])->save();
 
     // Guards first
     expect(fn () => PayoutService::request($seller, 49.99))->toThrow(DomainException::class);

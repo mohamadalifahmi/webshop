@@ -28,6 +28,33 @@ Route::get('/shop', Catalog::class)->name('shop');
 Route::get('/product/{product}', ProductShow::class)->name('product.show');
 Route::get('/become-seller', SellerApplication::class)->middleware(['auth', 'throttle:10,1'])->name('become-seller');
 
+// Currency preference toggle (USD / LBP) — persists to the session so the
+// price component (x-price) actually reflects the chosen currency.
+Route::get('/currency/{currency}', function (string $currency) {
+    if (! in_array(strtoupper($currency), ['USD', 'LBP'], true)) {
+        abort(404);
+    }
+
+    session(['currency' => strtoupper($currency)]);
+
+    return redirect(url()->previous() ?: route('home'));
+})->name('currency');
+
+// Newsletter signup — stores safely, throttled, stateless (no account needed).
+Route::post('/newsletter', function (\Illuminate\Http\Request $request) {
+    $validated = $request->validate([
+        'email' => 'required|email:rfc,filter|max:190',
+    ]);
+
+    \App\Models\Setting::updateOrCreate(
+        ['key' => 'newsletter_email:'.md5(strtolower($validated['email']))],
+        ['value' => strtolower($validated['email'])],
+    );
+
+    return redirect(url()->previous() ?: route('home'))
+        ->with('success', 'Welcome aboard — you are now subscribed to ASTRAGO news.');
+})->middleware('throttle:5,1')->name('newsletter');
+
 Route::get('/dashboard', fn () => redirect()->to(
     auth()->user()?->isAdmin() ? route('admin.dashboard')
         : (auth()->user()?->isSeller() ? route('seller.dashboard')

@@ -46,7 +46,7 @@ class CancelUnshippedOrders implements ShouldQueue
                 if ($earningCredited) {
                     $seller = Seller::lockForUpdate()->findOrFail($item->seller_id);
                     $newBalance = bcsub((string) $seller->balance, (string) $item->seller_earning, 2);
-                    $seller->update(['balance' => $newBalance]);
+                    $seller->forceFill(['balance' => $newBalance])->save();
 
                     Transaction::create([
                         'seller_id' => $seller->id,
