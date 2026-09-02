@@ -1,21 +1,21 @@
 <div>
     <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
         <h1 class="text-xl sm:text-2xl font-black text-gray-900">My Products</h1>
-        <button wire:click="create" class="inline-flex items-center rounded-lg bg-amber-600 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-700 transition">+ New Product</button>
+        <button wire:click="create" class="inline-flex items-center rounded-lg bg-stargold-500 text-deep px-4 py-2 text-sm font-semibold text-white hover:bg-stargold-700 transition">+ New Product</button>
     </div>
 
     @php($filters = ['' => 'All', 'draft' => 'Draft', 'pending' => 'Pending', 'active' => 'Active', 'rejected' => 'Rejected'])
     <div class="mb-4 flex flex-wrap gap-2">
         @foreach ($filters as $key => $label)
             <button wire:click="$set('statusFilter', '{{ $key }}')" wire:loading.attr="disabled"
-                class="rounded-full px-3.5 py-1.5 text-xs font-semibold transition {{ $statusFilter === $key ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-500 hover:border-amber-300' }}">
+                class="rounded-full px-3.5 py-1.5 text-xs font-semibold transition {{ $statusFilter === $key ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-500 hover:border-stargold-300' }}">
                 {{ $label }}
             </button>
         @endforeach
     </div>
 
     @if ($showForm)
-        <form wire:submit="save" class="mb-6 rounded-2xl bg-white border-2 border-amber-400/60 p-5 sm:p-6 space-y-4 shadow-sm">
+        <form wire:submit="save" class="mb-6 rounded-2xl bg-white border-2 border-stargold-400/60 p-5 sm:p-6 space-y-4 shadow-sm">
             <div class="flex items-center justify-between">
                 <h2 class="font-bold text-gray-900">{{ $editingId ? 'Edit Product' : 'New Product' }}</h2>
                 <span class="text-[11px] text-gray-400">Submitting sets status to <b>pending</b> for admin review.</span>
@@ -23,30 +23,30 @@
 
             <label class="block text-sm">
                 <span class="mb-1 block font-medium text-gray-700">Name</span>
-                <input type="text" wire:model="name" class="w-full rounded-lg border-gray-300 focus:ring-amber-500" />
+                <input type="text" wire:model="name" class="w-full rounded-lg border-gray-300 focus:ring-stargold-500" />
                 @error('name') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
             </label>
 
             <label class="block text-sm">
                 <span class="mb-1 block font-medium text-gray-700">Description</span>
-                <textarea wire:model="description" rows="3" class="w-full rounded-lg border-gray-300 focus:ring-amber-500"></textarea>
+                <textarea wire:model="description" rows="3" class="w-full rounded-lg border-gray-300 focus:ring-stargold-500"></textarea>
                 @error('description') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
             </label>
 
             <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <label class="block text-sm">
                     <span class="mb-1 block font-medium text-gray-700">Price ($)</span>
-                    <input type="number" step="0.01" min="0.01" wire:model="price" class="w-full rounded-lg border-gray-300 focus:ring-amber-500" />
+                    <input type="number" step="0.01" min="0.01" wire:model="price" class="w-full rounded-lg border-gray-300 focus:ring-stargold-500" />
                     @error('price') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </label>
                 <label class="block text-sm">
                     <span class="mb-1 block font-medium text-gray-700">Stock</span>
-                    <input type="number" min="0" wire:model="stock" class="w-full rounded-lg border-gray-300 focus:ring-amber-500" />
+                    <input type="number" min="0" wire:model="stock" class="w-full rounded-lg border-gray-300 focus:ring-stargold-500" />
                     @error('stock') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </label>
                 <label class="block text-sm">
                     <span class="mb-1 block font-medium text-gray-700">Category</span>
-                    <select wire:model="categoryId" class="w-full rounded-lg border-gray-300 focus:ring-amber-500">
+                    <select wire:model="categoryId" class="w-full rounded-lg border-gray-300 focus:ring-stargold-500">
                         <option value="">Select...</option>
                         @foreach ($categories as $cat)
                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>
@@ -56,7 +56,7 @@
                 </label>
                 <label class="block text-sm">
                     <span class="mb-1 block font-medium text-gray-700">SKU (optional)</span>
-                    <input type="text" wire:model="sku" placeholder="auto-generated" class="w-full rounded-lg border-gray-300 focus:ring-amber-500" />
+                    <input type="text" wire:model="sku" placeholder="auto-generated" class="w-full rounded-lg border-gray-300 focus:ring-stargold-500" />
                     @error('sku') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </label>
             </div>
@@ -67,7 +67,7 @@
                     class="block w-full text-sm text-gray-500 file:mr-3 file:rounded-lg file:border-0 file:bg-gray-800 file:px-4 file:py-2 file:text-white file:text-xs file:font-semibold hover:file:bg-gray-700" />
                 @error('images.*') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 @error('images') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
-                <div wire:loading wire:target="images" class="mt-2 text-xs text-amber-600 animate-pulse">Uploading…</div>
+                <div wire:loading wire:target="images" class="mt-2 text-xs text-stargold-600 animate-pulse">Uploading…</div>
                 @if ($images)
                     <div class="mt-3 flex flex-wrap gap-2">
                         @foreach ($images as $img)
@@ -100,10 +100,10 @@
                         <td class="px-5 py-4">
                             <div class="flex items-center gap-3">
                                 <div class="h-11 w-11 shrink-0 overflow-hidden rounded-lg bg-gray-100">
-                                    @if ($img = $product->getFirstMediaUrl('images', 'thumb') ?: $product->getFirstMediaUrl('images'))
+                                    @if ($img = $product->getFirstMediaUrl('images', 'webp-thumb') ?: $product->getFirstMediaUrl('images'))
                                         <img src="{{ $img }}" class="h-full w-full object-cover" />
                                     @else
-                                        <div class="flex h-full items-center justify-center">📦</div>
+                                        <div class="flex h-full items-center justify-center text-gray-300"><x-icon-package class="h-6 w-6" /></div>
                                     @endif
                                 </div>
                                 <div class="min-w-0">

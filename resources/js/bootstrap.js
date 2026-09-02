@@ -1,4 +1,5 @@
-import axios from 'axios';
-window.axios = axios;
-
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+/* ============================================================
+   ASTRAGO MARKET — frontend bootstrap
+   axios is intentionally NOT wired: the app uses Livewire + native
+   POST forms exclusively, so shipping axios saved ~40KB from the bundle.
+   ============================================================ */

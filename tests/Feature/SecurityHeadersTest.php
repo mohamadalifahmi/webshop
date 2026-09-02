@@ -35,8 +35,9 @@ it('sends a nonce-based CSP that never allows unsafe-inline for scripts', functi
     // Livewire/Alpine REQUIRE 'unsafe-eval' (documented) — keep it, it's A+-safe
     expect($csp)->toContain("'unsafe-eval'");
 
-    // Ghost Hosts (fonts for Inter stylesheet) explicitly allowed
-    expect($csp)->toContain('https://fonts.bunny.net');
+    // Fonts are self-hosted — no external font host in the policy
+    expect($csp)->not->toContain('fonts.bunny.net');
+    expect($csp)->toContain("font-src 'self' data:");
 
     // A per-request nonce is embedded
     expect($csp)->toMatch('/nonce-[A-Za-z0-9+\/=]+/');

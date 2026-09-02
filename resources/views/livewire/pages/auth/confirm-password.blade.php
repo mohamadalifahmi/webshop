@@ -34,7 +34,7 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <h1 class="text-xl font-black text-gray-900">🔒 Confirm it's you</h1>
+    <h1 class="text-xl font-black text-gray-900">Confirm it's you</h1>
     <p class="mt-1 mb-6 text-sm text-gray-400">
         {{ __('This is a secure area. Please confirm your password before continuing.') }}
     </p>

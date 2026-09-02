@@ -5,7 +5,7 @@
     <div class="mb-4 flex flex-wrap gap-2">
         @foreach ($filters as $key => $label)
             <button wire:click="$set('shipmentFilter', '{{ $key }}')"
-                class="rounded-full px-3.5 py-1.5 text-xs font-semibold transition {{ $shipmentFilter === $key ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-500 hover:border-amber-300' }}">
+                class="rounded-full px-3.5 py-1.5 text-xs font-semibold transition {{ $shipmentFilter === $key ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-500 hover:border-stargold-300' }}">
                 {{ $label }}
             </button>
         @endforeach
@@ -53,7 +53,7 @@
                             <div class="flex justify-end gap-2 text-xs font-semibold">
                                 @if ($item->shipment_status === 'awaiting')
                                     <button wire:click="openShipModal({{ $item->id }})"
-                                        class="rounded-lg bg-amber-600 px-3.5 py-2 text-white hover:bg-amber-700">Mark as Shipped</button>
+                                        class="rounded-lg bg-stargold-500 text-deep px-3.5 py-2 text-white hover:bg-stargold-700">Mark as Shipped</button>
                                 @elseif ($item->shipment_status === 'shipped')
                                     <button wire:click="confirmDelivered({{ $item->id }})"
                                         class="rounded-lg bg-teal-600 px-3.5 py-2 text-white hover:bg-teal-700">Mark Delivered</button>
@@ -82,7 +82,7 @@
                 <h2 class="text-lg font-bold text-gray-900">Enter Tracking Number</h2>
                 <p class="mt-1 text-xs text-gray-400">Buyer receives an email instantly with this number.</p>
                 <input type="text" wire:model="trackingNumber" placeholder="e.g. ARX123" autofocus
-                    class="mt-4 w-full rounded-lg border-gray-300 focus:ring-amber-500 font-mono" />
+                    class="mt-4 w-full rounded-lg border-gray-300 focus:ring-stargold-500 font-mono" />
                 @error('trackingNumber') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 <div class="mt-5 flex gap-3 justify-end">
                     <button type="button" wire:click="$set('showShipModal', false)" class="rounded-lg px-4 py-2 text-sm font-semibold text-gray-500 hover:text-gray-800">Cancel</button>

@@ -5,7 +5,7 @@
     <div class="mb-4 flex flex-wrap gap-2">
         @foreach ($filters as $key => $label)
             <button wire:click="$set('statusFilter', '{{ $key }}')"
-                class="rounded-full px-3.5 py-1.5 text-xs font-semibold transition {{ $statusFilter === $key ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-500 hover:border-amber-300' }}">
+                class="rounded-full px-3.5 py-1.5 text-xs font-semibold transition {{ $statusFilter === $key ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-500 hover:border-stargold-300' }}">
                 {{ $label }}
             </button>
         @endforeach

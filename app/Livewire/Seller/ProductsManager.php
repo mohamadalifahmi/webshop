@@ -76,8 +76,9 @@ class ProductsManager extends Component
         $validated = $this->validate();
 
         $seller = auth()->user()->seller;
+        $optimized = [];
 
-        DB::transaction(function () use ($validated, $seller) {
+        DB::transaction(function () use ($validated, $seller, &$optimized) {
             $data = [
                 'name' => $validated['name'],
                 'description' => $validated['description'],
@@ -99,18 +100,44 @@ class ProductsManager extends Component
             }
 
             foreach ($this->images as $image) {
-                $product->addMedia($image->getRealPath())
+                $originalBytes = (int) $image->getSize();
+
+                $media = $product->addMedia($image->getRealPath())
                     ->usingFileName(Str::random(16).'.'.$image->extension())
                     ->toMediaCollection('images');
+
+                // WebP conversion is generated synchronously (nonQueued) — measure it now.
+                $webpPath = $media->getPath('webp');
+                if (is_file($webpPath)) {
+                    $webpBytes = (int) filesize($webpPath);
+                    if ($originalBytes > 0 && $webpBytes > 0 && $webpBytes < $originalBytes) {
+                        $optimized[] = $this->formatBytes($originalBytes).' → '.$this->formatBytes($webpBytes);
+                    }
+                }
             }
         });
 
-        session()->flash('success', $this->editingId
-            ? 'Product updated and resubmitted for approval.'
-            : 'Product submitted for admin approval.');
-
         $this->resetForm();
         $this->showForm = false;
+
+        $message = $this->editingId
+            ? 'Product updated and resubmitted for approval.'
+            : 'Product submitted for admin approval.';
+
+        if ($optimized !== []) {
+            session()->flash('success', $message.' Optimized images: '.implode(', ', $optimized).'.');
+        } else {
+            session()->flash('success', $message);
+        }
+    }
+
+    private function formatBytes(int $bytes): string
+    {
+        if ($bytes >= 1048576) {
+            return number_format($bytes / 1048576, 2).' MB';
+        }
+
+        return number_format($bytes / 1024, 0).' KB';
     }
 
     public function delete(int $id): void

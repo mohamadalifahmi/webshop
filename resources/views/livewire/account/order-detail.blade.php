@@ -1,5 +1,5 @@
 <div class="max-w-3xl mx-auto">
-    <a href="{{ route('account.orders') }}" wire:navigate class="text-sm text-gray-400 hover:text-amber-600">← Back to my orders</a>
+    <a href="{{ route('account.orders') }}" wire:navigate class="text-sm text-gray-400 hover:text-stargold-600">← Back to my orders</a>
 
     <div class="mt-4 rounded-2xl bg-white border border-gray-200 overflow-hidden">
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 p-5 sm:p-6">
@@ -30,7 +30,7 @@
                             <span class="rounded-lg bg-gray-100 px-2.5 py-1 font-mono text-xs font-bold text-gray-700">Tracking: {{ $item->tracking_number }}</span>
                         @endif
                         @if ($item->shipment_status === 'awaiting' && $order->payment_status === 'paid')
-                            <span class="text-[11px] text-amber-600">Seller must ship before {{ optional($item->cancel_deadline_at)->format('d M, H:i') }}</span>
+                            <span class="text-[11px] text-stargold-600">Seller must ship before {{ optional($item->cancel_deadline_at)->format('d M, H:i') }}</span>
                         @endif
                     </div>
                 </li>

@@ -28,17 +28,17 @@
             <div class="grid gap-4 sm:grid-cols-3">
                 <label class="block text-sm">
                     <span class="mb-1 block font-medium text-gray-700">Global commission %</span>
-                    <input type="number" min="0" max="100" step="0.01" wire:model="globalCommissionRate" class="w-full rounded-lg border-gray-300 focus:ring-amber-500" />
+                    <input type="number" min="0" max="100" step="0.01" wire:model="globalCommissionRate" class="w-full rounded-lg border-gray-300 focus:ring-stargold-500" />
                     @error('globalCommissionRate') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </label>
                 <label class="block text-sm">
                     <span class="mb-1 block font-medium text-gray-700">Min payout ($)</span>
-                    <input type="number" min="0" step="0.01" wire:model="minPayout" class="w-full rounded-lg border-gray-300 focus:ring-amber-500" />
+                    <input type="number" min="0" step="0.01" wire:model="minPayout" class="w-full rounded-lg border-gray-300 focus:ring-stargold-500" />
                     @error('minPayout') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </label>
                 <label class="block text-sm">
                     <span class="mb-1 block font-medium text-gray-700">LBP exchange rate</span>
-                    <input type="number" min="1" step="0.5" wire:model="lbpExchangeRate" class="w-full rounded-lg border-gray-300 focus:ring-amber-500" />
+                    <input type="number" min="1" step="0.5" wire:model="lbpExchangeRate" class="w-full rounded-lg border-gray-300 focus:ring-stargold-500" />
                     @error('lbpExchangeRate') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </label>
             </div>
@@ -49,15 +49,15 @@
             <div class="grid gap-4 sm:grid-cols-3">
                 <label class="block text-sm">
                     <span class="mb-1 block font-medium text-gray-700">Ship deadline (hours)</span>
-                    <input type="number" min="1" wire:model="shipDeadlineHours" class="w-full rounded-lg border-gray-300 focus:ring-amber-500" />
+                    <input type="number" min="1" wire:model="shipDeadlineHours" class="w-full rounded-lg border-gray-300 focus:ring-stargold-500" />
                 </label>
                 <label class="block text-sm">
                     <span class="mb-1 block font-medium text-gray-700">Hold after delivery (days)</span>
-                    <input type="number" min="0" wire:model="holdDaysAfterDelivery" class="w-full rounded-lg border-gray-300 focus:ring-amber-500" />
+                    <input type="number" min="0" wire:model="holdDaysAfterDelivery" class="w-full rounded-lg border-gray-300 focus:ring-stargold-500" />
                 </label>
                 <label class="block text-sm">
                     <span class="mb-1 block font-medium text-gray-700">Default shipping fee ($)</span>
-                    <input type="number" min="0" step="0.01" wire:model="defaultShippingFee" class="w-full rounded-lg border-gray-300 focus:ring-amber-500" />
+                    <input type="number" min="0" step="0.01" wire:model="defaultShippingFee" class="w-full rounded-lg border-gray-300 focus:ring-stargold-500" />
                 </label>
             </div>
             @error('shipDeadlineHours') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
@@ -75,7 +75,7 @@
                         </label>
                         <input type="text" wire:model.debounce.400ms="rates.{{ $i }}.governorate"
                             value="{{ $rate['governorate'] }}"
-                            class="w-full rounded-lg border-gray-300 bg-white text-sm font-semibold text-gray-800 focus:border-amber-500 focus:ring-amber-500" />
+                            class="w-full rounded-lg border-gray-300 bg-white text-sm font-semibold text-gray-800 focus:border-stargold-500 focus:ring-stargold-500" />
                         @error("rates.{$i}.governorate") <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
 
                         <label class="mb-1 mt-2.5 block text-[10px] font-bold uppercase tracking-widest text-gray-400">
@@ -85,7 +85,7 @@
                             <span class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-gray-400">$</span>
                             <input type="number" step="0.01" min="0" wire:model.debounce.400ms="rates.{{ $i }}.fee"
                                 value="{{ $rate['fee'] }}"
-                                class="w-full rounded-lg border-gray-300 bg-white pl-7 text-sm font-semibold text-gray-800 focus:border-amber-500 focus:ring-amber-500" />
+                                class="w-full rounded-lg border-gray-300 bg-white pl-7 text-sm font-semibold text-gray-800 focus:border-stargold-500 focus:ring-stargold-500" />
                         </div>
                         @error("rates.{$i}.fee") <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                         <div class="mt-2 pt-2 border-t border-gray-200 flex justify-between items-center">

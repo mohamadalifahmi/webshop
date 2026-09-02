@@ -58,7 +58,7 @@
                         <td class="px-4 py-3 text-gray-500">{{ $cat->slug }}</td>
                         <td class="px-4 py-3 text-gray-400">{{ $cat->icon ?? '-' }}</td>
                         <td class="text-right px-4 py-3 space-x-2">
-                            <button wire:click="edit({{ $cat->id }})" class="text-xs font-medium text-amber-600 hover:text-amber-700">Edit</button>
+                            <button wire:click="edit({{ $cat->id }})" class="text-xs font-medium text-stargold-600 hover:text-stargold-700">Edit</button>
                             <button wire:click="deleteCategory({{ $cat->id }})" wire:confirm="Delete this category?" class="text-xs text-red-500 hover:text-red-600">Delete</button>
                         </td>
                         @endif

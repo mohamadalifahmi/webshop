@@ -6,7 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="csp-nonce" content="{{ $cspNonce ?? '' }}">
     <title>{{ $title ?? 'Seller Hub' }} — ASTRAGO MARKET</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>">
+    @include('partials.font-preload')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles(['nonce' => $cspNonce ?? ''])
 </head>
@@ -15,34 +16,34 @@
     <!-- Sidebar -->
     <aside id="seller-sidebar" class="fixed inset-y-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0 transition-transform bg-gray-900 text-gray-300 flex flex-col">
         <a href="{{ route('home') }}" wire:navigate class="flex h-16 items-center gap-2 border-b border-gray-800 px-6 shrink-0">
-            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-600 font-black text-white">S</span>
+            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-stargold-500 text-deep font-black text-white">S</span>
             <div>
                 <p class="text-sm font-black text-white leading-none">ASTRAGO MARKET</p>
-                <p class="text-[10px] uppercase tracking-widest text-amber-500 mt-1">Seller Hub</p>
+                <p class="text-[10px] uppercase tracking-widest text-stargold-400 mt-1">Seller Hub</p>
             </div>
         </a>
 
         <nav class="flex-1 space-y-1 overflow-y-auto px-3 py-4 text-sm font-medium">
             @php($route = request()->route()?->getName())
             <a href="{{ route('seller.dashboard') }}" wire:navigate
-               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'seller.dashboard' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
-                📊 Dashboard
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'seller.dashboard' ? 'bg-stargold-500 text-deep' : 'hover:bg-gray-800 hover:text-white' }}">
+                <x-icon name="dashboard" /> Dashboard
             </a>
             <a href="{{ route('seller.products') }}" wire:navigate
-               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'seller.products' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
-                📦 My Products
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'seller.products' ? 'bg-stargold-500 text-deep' : 'hover:bg-gray-800 hover:text-white' }}">
+                <x-icon name="shopping" /> My Products
             </a>
             <a href="{{ route('seller.orders') }}" wire:navigate
-               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'seller.orders' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
-                🚚 Orders to Ship
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'seller.orders' ? 'bg-stargold-500 text-deep' : 'hover:bg-gray-800 hover:text-white' }}">
+                <x-icon name="orders" /> Orders to Ship
             </a>
             <a href="{{ route('seller.payouts') }}" wire:navigate
-               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'seller.payouts' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
-                💵 Payouts
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'seller.payouts' ? 'bg-stargold-500 text-deep' : 'hover:bg-gray-800 hover:text-white' }}">
+                <x-icon name="payout" /> Payouts
             </a>
             <a href="{{ route('seller.settings') }}" wire:navigate
-               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'seller.settings' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
-                ⚙️ Store Settings
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'seller.settings' ? 'bg-stargold-500 text-deep' : 'hover:bg-gray-800 hover:text-white' }}">
+                <x-icon name="settings" /> Store Settings
             </a>
         </nav>
 
@@ -54,7 +55,7 @@
     <!-- Main -->
     <div class="flex flex-1 flex-col lg:pl-64 min-w-0">
         <header class="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 sm:px-6">
-            <button onclick="document.getElementById('seller-sidebar').classList.toggle('-translate-x-full')" class="lg:hidden p-2 text-gray-500">☰</button>
+            <button onclick="document.getElementById('seller-sidebar').classList.toggle('-translate-x-full')" class="lg:hidden p-2 text-gray-500" aria-label="Toggle sidebar"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg></button>
             <p class="hidden lg:block text-sm font-semibold text-gray-500">{{ $title ?? '' }}</p>
             <div class="flex items-center gap-4 text-sm">
                 <span class="hidden sm:inline text-gray-400">{{ auth()->user()->name }}</span>

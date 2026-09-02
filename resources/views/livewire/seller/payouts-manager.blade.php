@@ -9,23 +9,23 @@
             </div>
 
             @if ($hasPending)
-                <div class="rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-xs text-amber-700 font-medium">
+                <div class="rounded-lg bg-stargold-50 border border-stargold-200 px-4 py-3 text-xs text-stargold-700 font-medium">
                     ⏳ You already have a pending payout awaiting admin approval.
                 </div>
             @else
                 <label class="block text-sm">
                     <span class="mb-1 block font-medium text-gray-700">Amount ($)</span>
-                    <input type="number" step="0.01" min="1" wire:model="amount" class="w-full rounded-lg border-gray-300 focus:ring-amber-500" />
+                    <input type="number" step="0.01" min="1" wire:model="amount" class="w-full rounded-lg border-gray-300 focus:ring-stargold-500" />
                     @error('amount') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </label>
                 <label class="block text-sm">
                     <span class="mb-1 block font-medium text-gray-700">Bank name</span>
-                    <input type="text" wire:model="bankName" placeholder="e.g. Byblos Bank" class="w-full rounded-lg border-gray-300 focus:ring-amber-500" />
+                    <input type="text" wire:model="bankName" placeholder="e.g. Byblos Bank" class="w-full rounded-lg border-gray-300 focus:ring-stargold-500" />
                     @error('bankName') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </label>
                 <label class="block text-sm">
                     <span class="mb-1 block font-medium text-gray-700">IBAN</span>
-                    <input type="text" wire:model="iban" class="w-full rounded-lg border-gray-300 focus:ring-amber-500 font-mono" />
+                    <input type="text" wire:model="iban" class="w-full rounded-lg border-gray-300 focus:ring-stargold-500 font-mono" />
                     @error('iban') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </label>
                 <x-ui-button type="primary" class="w-full !py-3" wire:loading.attr="disabled" wire:target="requestPayout">Request Payout</x-ui-button>

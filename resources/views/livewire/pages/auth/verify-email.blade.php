@@ -36,7 +36,7 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <h1 class="text-xl font-black text-gray-900">Verify your email 📬</h1>
+    <h1 class="text-xl font-black text-gray-900">Verify your email</h1>
     <div class="mt-2 mb-5 text-sm text-gray-500">
         {{ __('Thanks for signing up! Click the link we emailed you to activate your account. Didn\'t receive it? We can send another.') }}
     </div>

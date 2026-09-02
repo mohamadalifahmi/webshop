@@ -7,7 +7,6 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.0",
-        "laravel/scout": "^11.5",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.6.4",
         "livewire/volt": "^1.7.0",
@@ -75,8 +74,8 @@
             "block-insecure": false
         },
         "platform": {
-            "php": "^8.2",
-            "ext-exif": "*"
+            "php": "8.2.12",
+            "ext-exif": "8.2"
         }
     },
     "minimum-stability": "stable",

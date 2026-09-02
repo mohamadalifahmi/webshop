@@ -6,7 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="csp-nonce" content="{{ $cspNonce ?? '' }}">
     <title>{{ $title ?? 'Admin' }} — ASTRAGO MARKET</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>">
+    @include('partials.font-preload')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles(['nonce' => $cspNonce ?? ''])
 </head>
@@ -14,42 +15,42 @@
 <div class="flex min-h-screen">
     <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0 transition-transform bg-gray-900 text-gray-300 flex flex-col">
         <a href="{{ route('home') }}" wire:navigate class="flex h-16 items-center gap-2 border-b border-gray-800 px-6 shrink-0">
-            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-600 font-black text-white">S</span>
+            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-stargold-500 text-deep font-black text-white">S</span>
             <div>
                 <p class="text-sm font-black text-white leading-none">ASTRAGO MARKET</p>
-                <p class="text-[10px] uppercase tracking-widest text-amber-500 mt-1">Admin Panel</p>
+                <p class="text-[10px] uppercase tracking-widest text-stargold-400 mt-1">Admin Panel</p>
             </div>
         </a>
 
         <nav class="flex-1 space-y-1 overflow-y-auto px-3 py-4 text-sm font-medium">
             @php($route = request()->route()?->getName())
             <a href="{{ route('admin.dashboard') }}" wire:navigate
-               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.dashboard' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
-                📊 Dashboard
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.dashboard' ? 'bg-stargold-500 text-deep' : 'hover:bg-gray-800 hover:text-white' }}">
+                <x-icon name="dashboard" /> Dashboard
             </a>
             <a href="{{ route('admin.sellers') }}" wire:navigate
-               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.sellers' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
-                🏪 Sellers
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.sellers' ? 'bg-stargold-500 text-deep' : 'hover:bg-gray-800 hover:text-white' }}">
+                <x-icon name="store" /> Sellers
             </a>
             <a href="{{ route('admin.products') }}" wire:navigate
-               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.products' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
-                🛍️ Products
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.products' ? 'bg-stargold-500 text-deep' : 'hover:bg-gray-800 hover:text-white' }}">
+                <x-icon name="shopping" /> Products
             </a>
             <a href="{{ route('admin.orders') }}" wire:navigate
-               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.orders' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
-                🧾 Orders & Payments
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.orders' ? 'bg-stargold-500 text-deep' : 'hover:bg-gray-800 hover:text-white' }}">
+                <x-icon name="orders" /> Orders &amp; Payments
             </a>
             <a href="{{ route('admin.payouts') }}" wire:navigate
-               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.payouts' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
-                💸 Payouts
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.payouts' ? 'bg-stargold-500 text-deep' : 'hover:bg-gray-800 hover:text-white' }}">
+                <x-icon name="payout" /> Payouts
             </a>
             <a href="{{ route('admin.settings') }}" wire:navigate
-               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.settings' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
-                ⚙️ Site Settings
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.settings' ? 'bg-stargold-500 text-deep' : 'hover:bg-gray-800 hover:text-white' }}">
+                <x-icon name="settings" /> Site Settings
             </a>
             <a href="{{ route('admin.categories') }}" wire:navigate
-               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.categories' ? 'bg-amber-600 text-white' : 'hover:bg-gray-800 hover:text-white' }}">
-                🏷️ Categories
+               class="flex items-center gap-3 rounded-lg px-3 py-2.5 {{ $route === 'admin.categories' ? 'bg-stargold-500 text-deep' : 'hover:bg-gray-800 hover:text-white' }}">
+                <x-icon name="tag" /> Categories
             </a>
         </nav>
 
@@ -60,7 +61,7 @@
 
     <div class="flex flex-1 flex-col lg:pl-64 min-w-0">
         <header class="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 sm:px-6">
-            <button onclick="document.getElementById('admin-sidebar').classList.toggle('-translate-x-full')" class="lg:hidden p-2 text-gray-500">☰</button>
+            <button onclick="document.getElementById('admin-sidebar').classList.toggle('-translate-x-full')" class="lg:hidden p-2 text-gray-500" aria-label="Toggle sidebar"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg></button>
             <p class="hidden lg:block text-sm font-semibold text-gray-500">{{ $title ?? '' }}</p>
             <div class="flex items-center gap-4 text-sm">
                 <span class="hidden sm:inline text-gray-400">{{ auth()->user()->name }}</span>

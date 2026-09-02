@@ -5,7 +5,7 @@
     <div class="mb-4 flex flex-wrap gap-2">
         @foreach ($filters as $key => $label)
             <button wire:click="$set('statusFilter', '{{ $key }}')"
-                class="rounded-full px-3.5 py-1.5 text-xs font-semibold transition {{ $statusFilter === $key ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-500 hover:border-amber-300' }}">
+                class="rounded-full px-3.5 py-1.5 text-xs font-semibold transition {{ $statusFilter === $key ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-500 hover:border-stargold-300' }}">
                 {{ $label }}
             </button>
         @endforeach
@@ -28,10 +28,10 @@
                         <td class="px-5 py-4">
                             <div class="flex items-center gap-3">
                                 <div class="h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-gray-100">
-                                    @if ($img = $product->getFirstMediaUrl('images', 'thumb') ?: $product->getFirstMediaUrl('images'))
+                                    @if ($img = $product->getFirstMediaUrl('images', 'webp-thumb') ?: $product->getFirstMediaUrl('images'))
                                         <img src="{{ $img }}" class="h-full w-full object-cover" />
                                     @else
-                                        <div class="flex h-full items-center justify-center">📦</div>
+                                        <div class="flex h-full items-center justify-center text-gray-300"><x-icon-package class="h-6 w-6" /></div>
                                     @endif
                                 </div>
                                 <div class="min-w-0 max-w-56">
@@ -78,7 +78,7 @@
                 <h2 class="text-lg font-bold text-gray-900">Rejection Reason</h2>
                 <p class="mt-1 text-xs text-gray-400">The seller receives this by email.</p>
                 <textarea wire:model="rejectionReason" rows="3" autofocus placeholder="e.g. No image attached..."
-                    class="mt-4 w-full rounded-lg border-gray-300 focus:ring-amber-500"></textarea>
+                    class="mt-4 w-full rounded-lg border-gray-300 focus:ring-stargold-500"></textarea>
                 @error('rejectionReason') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 <div class="mt-5 flex gap-3 justify-end">
                     <button type="button" wire:click="$set('showRejectModal', false)" class="rounded-lg px-4 py-2 text-sm font-semibold text-gray-500 hover:text-gray-800">Cancel</button>

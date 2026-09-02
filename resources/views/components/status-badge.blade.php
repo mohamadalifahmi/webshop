@@ -5,11 +5,11 @@
 @php
     $map = [
         'draft' => 'bg-gray-100 text-gray-600 ring-gray-200',
-        'pending' => 'bg-amber-50 text-amber-700 ring-amber-200',
-        'pending_payment' => 'bg-amber-50 text-amber-700 ring-amber-200',
+        'pending' => 'bg-stargold-50 text-stargold-700 ring-stargold-200',
+        'pending_payment' => 'bg-stargold-50 text-stargold-700 ring-stargold-200',
         'awaiting_proof' => 'bg-blue-50 text-blue-700 ring-blue-200',
         'under_review' => 'bg-indigo-50 text-indigo-700 ring-indigo-200',
-        'awaiting' => 'bg-amber-50 text-amber-700 ring-amber-200',
+        'awaiting' => 'bg-stargold-50 text-stargold-700 ring-stargold-200',
         'active' => 'bg-emerald-50 text-emerald-700 ring-emerald-200',
         'approved' => 'bg-emerald-50 text-emerald-700 ring-emerald-200',
         'paid' => 'bg-emerald-50 text-emerald-700 ring-emerald-200',

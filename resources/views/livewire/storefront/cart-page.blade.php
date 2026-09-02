@@ -15,10 +15,10 @@
                 <div class="flex gap-4 p-4 sm:p-5 items-center">
                     @if ($item->product)
                         <a href="{{ route('product.show', $item->product) }}" wire:navigate class="h-20 w-20 sm:h-24 sm:w-24 shrink-0 overflow-hidden rounded-xl bg-space-800">
-                            @if ($img = $item->product->getFirstMediaUrl('images', 'thumb') ?: $item->product->getFirstMediaUrl('images'))
+@if ($img = $item->product->getFirstMediaUrl('images', 'webp-thumb') ?: $item->product->getFirstMediaUrl('images'))
                                 <img src="{{ $img }}" alt="{{ $item->product->name }}" width="96" height="96" loading="lazy" class="h-full w-full object-cover" />
                             @else
-                                <div class="flex h-full items-center justify-center text-2xl opacity-20">ðŸ“¦</div>
+                                <div class="flex h-full items-center justify-center text-white/20"><x-icon-package class="h-8 w-8" /></div>
                             @endif
                         </a>
                     @else

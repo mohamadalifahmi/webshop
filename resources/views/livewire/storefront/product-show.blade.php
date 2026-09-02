@@ -23,18 +23,18 @@
     <!-- Gallery -->
     <section>
         <div class="aspect-square overflow-hidden rounded-2xl border border-white/10 bg-space-800">
-            @if ($image = $product->getFirstMediaUrl('images', 'thumb') ?: $product->getFirstMediaUrl('images'))
-                <img src="{{ $image }}" alt="{{ $product->name }}" width="800" height="800" fetchpriority="high"
+            @if ($image = $product->getFirstMediaUrl('images', 'webp') ?: $product->getFirstMediaUrl('images'))
+                <img src="{{ $image }}" alt="{{ $product->name }}" width="1200" height="1200" fetchpriority="high"
                     class="h-full w-full object-cover" />
             @else
-                <div class="flex h-full items-center justify-center text-7xl opacity-20">📦</div>
+                <div class="flex h-full items-center justify-center text-white/10"><x-icon-package class="h-24 w-24" /></div>
             @endif
         </div>
         @if ($product->getMedia('images')->count() > 1)
             <div class="mt-3 grid grid-cols-5 gap-2">
                 @foreach ($product->getMedia('images') as $media)
-                    <img src="{{ $media->getUrl('thumb') }}" alt="{{ $product->name }} — thumbnail {{ $loop->index + 1 }}"
-                        width="80" height="80" loading="lazy" decoding="async" class="aspect-square rounded-lg object-cover border border-white/10" />
+                    <img src="{{ $media->getUrl('webp-thumb') }}" alt="{{ $product->name }} — thumbnail {{ $loop->index + 1 }}"
+                        width="400" height="400" loading="lazy" decoding="async" class="aspect-square rounded-lg object-cover border border-white/10" />
                 @endforeach
             </div>
         @endif

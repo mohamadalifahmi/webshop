@@ -5,7 +5,7 @@
     <div class="mb-4 flex flex-wrap gap-2">
         @foreach ($filters as $key => $label)
             <button wire:click="$set('statusFilter', '{{ $key }}')"
-                class="rounded-full px-3.5 py-1.5 text-xs font-semibold transition {{ $statusFilter === $key ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-500 hover:border-amber-300' }}">
+                class="rounded-full px-3.5 py-1.5 text-xs font-semibold transition {{ $statusFilter === $key ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-500 hover:border-stargold-300' }}">
                 {{ $label }}
             </button>
         @endforeach
@@ -41,7 +41,7 @@
                                     wire:model.live.debounce.500ms="overrides.{{ $seller->id }}"
                                     placeholder="{{ $globalRate }} (global)"
                                     value="{{ $seller->commission_override ?? '' }}"
-                                    class="w-24 rounded-lg border-gray-300 focus:ring-amber-500 text-xs" />
+                                    class="w-24 rounded-lg border-gray-300 focus:ring-stargold-500 text-xs" />
                                 <button wire:click="saveOverride({{ $seller->id }})" class="rounded-lg bg-gray-100 px-2.5 py-1.5 text-xs font-bold hover:bg-gray-200">Save</button>
                             </div>
                             @if ($seller->commission_override !== null)
@@ -57,7 +57,7 @@
                                         class="rounded-lg bg-red-50 px-3.5 py-2 text-red-600 hover:bg-red-100">Reject</button>
                                 @elseif ($seller->status === 'approved')
                                     <button wire:click="toggleSuspend({{ $seller->id }})" wire:confirm="Suspend this seller?"
-                                        class="rounded-lg bg-amber-50 px-3.5 py-2 text-amber-700 hover:bg-amber-100">Suspend</button>
+                                        class="rounded-lg bg-stargold-50 px-3.5 py-2 text-stargold-700 hover:bg-stargold-100">Suspend</button>
                                 @elseif ($seller->status === 'suspended')
                                     <button wire:click="toggleSuspend({{ $seller->id }})"
                                         class="rounded-lg bg-emerald-600 px-3.5 py-2 text-white hover:bg-emerald-700">Reactivate</button>
@@ -83,7 +83,7 @@
                 <h2 class="text-lg font-bold text-gray-900">Rejection Reason</h2>
                 <p class="mt-1 text-xs text-gray-400">The seller will see this reason.</p>
                 <textarea wire:model="rejectionReason" rows="3" autofocus placeholder="e.g. Missing business documents..."
-                    class="mt-4 w-full rounded-lg border-gray-300 focus:ring-amber-500"></textarea>
+                    class="mt-4 w-full rounded-lg border-gray-300 focus:ring-stargold-500"></textarea>
                 @error('rejectionReason') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 <div class="mt-5 flex gap-3 justify-end">
                     <button type="button" wire:click="$set('showRejectModal', false)" class="rounded-lg px-4 py-2 text-sm font-semibold text-gray-500 hover:text-gray-800">Cancel</button>

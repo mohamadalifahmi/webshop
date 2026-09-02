@@ -1,6 +1,7 @@
 @props([
     'title',
     'icon' => null,
+    'svg' => null,
     'subtitle' => null,
     'link' => null,
     'products' => [],
@@ -9,7 +10,9 @@
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 reveal">
     <div class="mb-6 flex items-end justify-between gap-4">
         <div class="flex items-center gap-3">
-            @if ($icon)
+            @if ($svg)
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cosmic-500/10 border border-cosmic-500/15 text-cosmic-400">{!! $svg !!}</span>
+            @elseif ($icon)
                 <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cosmic-500/10 border border-cosmic-500/15 text-2xl">{{ $icon }}</span>
             @endif
             <div>

@@ -38,6 +38,21 @@ class AddSecurityHeaders
 
         $response = $next($request);
 
+        // Browser caching policy:
+        //  - hashed build assets (immutable, content-addressed) -> 1 year
+        //  - user media (product images, proofs) -> 1 month
+        //  - HTML/JSON -> always revalidate (no stale pages, always fresh sessions)
+        $path = (string) $request->getRequestUri();
+        if (preg_match('#^/build/assets/.*\.(css|js|woff2?|svg|png|jpe?g|webp)(\?.*)?$#', $path)) {
+            $response->headers->set('Cache-Control', 'public, max-age=31536000, immutable');
+        } elseif (preg_match('#^/storage/.*\.(png|jpe?g|gif|webp|svg|avif|ico|pdf)(\?.*)?$#', $path)) {
+            $response->headers->set('Cache-Control', 'public, max-age=2592000');
+        } elseif (preg_match('#^/storage/.*\.(woff2?)(\?.*)?$#', $path)) {
+            $response->headers->set('Cache-Control', 'public, max-age=31536000, immutable');
+        } else {
+            $response->headers->set('Cache-Control', 'no-cache, must-revalidate');
+        }
+
         $response->headers->set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
         $response->headers->set('X-Frame-Options', 'DENY');
         $response->headers->set('X-Content-Type-Options', 'nosniff');
@@ -62,11 +77,11 @@ $response->headers->set('Content-Security-Policy', implode('; ', [
             // NOT penalize the SecurityHeaders A+ score (only 'unsafe-inline' does).
             "script-src 'self' 'nonce-{$nonce}' 'unsafe-eval' https://js.stripe.com https://m.stripe.network",
             // Tailwind/Preflight + Alpine inline style toggling need 'unsafe-inline' here;
-            // fonts.bunny.net serves the Inter stylesheet.
-            "style-src 'self' 'unsafe-inline' https://fonts.bunny.net",
+            // fonts are self-hosted (no external stylesheet host needed).
+            "style-src 'self' 'unsafe-inline'",
             $imgSrc,
-            // Fonts come from fonts.bunny.net (see app.css import)
-            "font-src 'self' https://fonts.bunny.net data:",
+            // Fonts are self-hosted under the Vite build.
+            "font-src 'self' data:",
             "connect-src 'self' https://api.stripe.com https://v3.stripe.com https://m.stripe.network",
             "frame-src https://js.stripe.com https://hooks.stripe.com",
             "object-src 'none'",
